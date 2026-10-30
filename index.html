@@ -701,6 +701,8 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
 
 /* V0.217 : questions sur l'IA, ressources à imprimer, copies personnelles, impression */
 .fpc.c-qa { --fc: var(--yellow); }
+.band.qband { background: var(--blue-soft); }
+.espt > div { display: flex; flex-direction: column; align-items: flex-start; } .espt > div > p { flex: 1; } .espt > div[hidden] { display: none; }
 .qhome { display: grid; grid-template-columns: 1fr 1fr; gap: 0 36px; margin: 8px 0 24px; }
 .qhome a { display: block; padding: 12px 0; border-bottom: 1px solid var(--ink); font-weight: 600; }
 #v-qa .fq p:last-child { margin-bottom: 14px; }
@@ -795,7 +797,7 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
     </div>
   </div>
 
-  <div class="band">
+  <div class="band qband">
     <div class="sechead"><div class="kick">Questions and answers</div><h2>Your questions about AI</h2></div>
     <div class="qhome" id="qhome"></div>
     <div style="text-align:center"><a class="btn" href="#qa">See all the questions</a></div>
@@ -1038,7 +1040,7 @@ You give neither medical nor legal advice.</pre>
 
   <span>Content under the Creative Commons BY-SA 4.0 licence. Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Version V0.224 · mock-up · 19 October 2026</div></div>
+<div class="demo"><div class="wrap">Version V0.225 · mock-up · 19 October 2026</div></div>
 <script>
 const PHASES = ['', 'Observation', 'Hypotheses', 'Experimentation', 'Validation', 'Reflection', 'Communication'];
 const THEMES = { gen: 'Generative AI', ml: 'Machine learning', rob: 'Robotics and sensors', eth: 'Ethics and critical thinking' };
