@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta name="robots" content="noindex, nofollow, noarchive">
 <meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="maquette-assets/favicon.png">
 <title>Youth AI Lab educator platform mock-up</title>
@@ -697,6 +697,48 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
 }
 @media print { header.top, .demo, footer, .noprint { display: none !important; } .two { grid-template-columns: 1fr; } }
 
+/* V0.217 : questions sur l'IA, ressources à imprimer, copies personnelles, impression */
+.fpc.c-qa { --fc: var(--yellow); }
+.qhome { display: grid; grid-template-columns: 1fr 1fr; gap: 0 36px; margin: 8px 0 24px; }
+.qhome a { display: block; padding: 12px 0; border-bottom: 1px solid var(--ink); font-weight: 600; }
+#v-qa .fq p:last-child { margin-bottom: 14px; }
+.resbar { display: flex; gap: 22px; flex-wrap: wrap; align-items: center; margin: 4px 0 18px; }
+.printhead, .printfoot { display: none; }
+#ghdlg { border: 1px solid var(--ink); border-radius: 6px; padding: 28px 30px; max-width: 480px; }
+#ghdlg::backdrop { background: rgba(0, 0, 0, .35); }
+#ghdlg h3 { margin: 0 0 10px; } #ghdlg .row { margin-top: 18px; gap: 18px; align-items: center; }
+.acct { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center; background: var(--blue-soft); border-radius: 4px; padding: 20px 24px; margin: 8px 0 28px; }
+.acct p { margin: 0; }
+.cpl { display: flex; justify-content: space-between; gap: 18px; padding: 12px 0; border-bottom: 1px solid var(--ink); }
+.cpnote { background: var(--blue-soft); border-radius: 4px; padding: 14px 18px; margin: 0 0 22px; }
+#cp-body { outline: none; } #cp-body:focus { box-shadow: 0 0 0 2px var(--blue); border-radius: 4px; }
+#cp-title { outline: none; }
+@media (max-width: 900px) { .qhome { grid-template-columns: 1fr; } }
+@page { size: A4; margin: 17mm 16mm 19mm;
+  @bottom-left { content: "Youth AI Lab · CC BY-SA 4.0"; font: 8.5pt Assistant, sans-serif; color: #595959; }
+  @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 8.5pt Assistant, sans-serif; color: #595959; } }
+@media print {
+  html, body { background: #fff; } body { font-size: 10.5pt; line-height: 1.42; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  main, .wrap, .two, .fwide, article.prot { display: block !important; width: auto !important; max-width: none !important; padding: 0 !important; margin: 0 !important; }
+  .printhead { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--c, var(--ink)); padding-bottom: 8pt; margin-bottom: 16pt; font-size: 9.5pt; }
+  .printhead img { height: 30pt; }
+  .printfoot { display: flex; gap: 14pt; align-items: center; border-top: 1px solid var(--ink); margin-top: 20pt; padding-top: 10pt; font-size: 8.5pt; break-inside: avoid; }
+  .printfoot img { height: 26pt; }
+  #fiche h1, #v-copie h1 { font-size: 23pt; line-height: 1.12; margin: 6pt 0 8pt; }
+  .lead { font-size: 11.5pt; } .chips { margin: 10pt 0 6pt; padding: 8pt 0; gap: 0 26pt; font-size: 9.5pt; }
+  .psec, .psec[hidden] { display: block !important; }
+  .psec[data-ps="f-ret"] { display: none !important; }
+  .prot h2 { font-size: 15pt; margin: 18pt 0 6pt !important; padding: 0 0 3pt !important; border: 0 !important; border-bottom: 2px solid var(--c, var(--ink)) !important; break-after: avoid; }
+  .prot h3 { font-size: 11.5pt; margin: 11pt 0 3pt; break-after: avoid; }
+  .prot p, .prot li, .prot td, #fiche .lead, #fiche .prot p, #fiche .prot li { text-align: left !important; line-height: 1.42; orphans: 3; widows: 3; }
+  #fiche .tw, #v-copie .tw, .tw { overflow: visible; margin: 3pt 0 10pt; } #fiche .pt, .pt { font-size: 9.5pt; } .pt tr { break-inside: avoid; } .pt thead { display: table-header-group; }
+  .acc details { break-inside: auto; } .acc details > div { display: block !important; padding: 0 !important; }
+  details::details-content { display: block !important; content-visibility: visible !important; height: auto !important; }
+  .acc summary { padding: 8pt 0 3pt !important; break-after: avoid; } .acc summary::after { content: none !important; }
+  .prot pre.code { font-size: 8.5pt; break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
+
 </style>
 </head>
 <body>
@@ -741,6 +783,12 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
       <div><h2>Where to start?</h2><p>Are you unsure which activity to offer, or where to begin? We can help you find your way. Answer a few simple questions about your situation: you will get a selection of activities suited to your profile to get you started, even without being an AI specialist.</p></div>
       <div><div class="quiz" id="autopos"></div></div>
     </div>
+  </div>
+
+  <div class="band">
+    <div class="sechead"><div class="kick">Questions and answers</div><h2>Your questions about AI</h2></div>
+    <div class="qhome" id="qhome"></div>
+    <div style="text-align:center"><a class="btn" href="#qa">See all the questions</a></div>
   </div>
 
   <div class="band">
@@ -820,6 +868,22 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
   <div class="seg" id="fp-cat"></div>
   <div class="grid g3 agrid" id="fp" style="margin-top:22px"></div>
 </section>
+
+<!-- QUESTIONS SUR L'IA : première fiche pratique, ouverte aussi depuis l'accueil -->
+<section class="view" id="v-qa">
+  <p><a href="#ia">← All practical sheets</a></p>
+  <h1>Questions and answers about AI</h1>
+  <p class="lead">You do not need to be a specialist to talk about AI with young people. Look here for a clear answer when a question comes up, and for the good practices to adopt before you use a tool.</p>
+  <input class="fsearch" id="qsearch" type="search" placeholder="Search for a question" aria-label="Search for a question">
+  <div class="fgrid" id="qa-list"></div>
+  <form class="fnone" id="qnone" hidden onsubmit="event.preventDefault(); this.innerHTML = '<h3>Question sent</h3><p>The mock-up sends nothing. In the online version, the question will reach the project team.</p>';">
+    <h3>This question has no answer yet</h3><p>Ask the project team. The answer will be added to this sheet.</p>
+    <div class="field"><label for="qn-q">Your question</label><textarea id="qn-q" rows="2"></textarea></div>
+    <button class="btn">Send the question</button></form>
+</section>
+
+<!-- COPIE PERSONNELLE D'UNE FICHE (compte GitHub facultatif) -->
+<section class="view" id="v-copie"><div id="copie"></div></section>
 
 <!-- UNE FICHE PRATIQUE : gabarit propre, distinct de la fiche d'activité -->
 <section class="view" id="v-pratique">
@@ -920,9 +984,11 @@ You give neither medical nor legal advice.</pre>
   <div id="esp-one" hidden></div>
   <div id="esp-list">
   <h1>My space</h1>
-  <p class="lead">This personal space is yours. Prepare your workshops and keep your notes here. You can also write a field report after a session. Your work stays in the browser you are using, with no account and no automatic sharing. Export it to back it up or move it to another device.</p>
+  <p class="lead">This personal space is yours. Prepare your workshops and keep your notes here. You can also write a field report after a session. Your work stays in the browser you are using, with no automatic sharing, and you do not need an account. Export it to back it up or move it to another device.</p>
   <div class="esph"><h2>My workshops</h2><a class="btn" href="#activites">Add a workshop</a></div>
   <div id="favs" class="espg"></div>
+  <div class="esph" style="margin-top:36px"><h2>My copies</h2></div>
+  <div id="acct"></div>
   <div class="espt">
     <div>
       <h3>Back up or change device</h3>
@@ -940,6 +1006,12 @@ You give neither medical nor legal advice.</pre>
 
 </div></main>
 
+<dialog id="ghdlg" aria-labelledby="ghdlg-t">
+  <h3 id="ghdlg-t">Keep your own copy of this sheet</h3>
+  <p>Sign in with GitHub to duplicate this sheet in your account and change it as you wish. Your copy stays private. An account is optional: everything else on the platform works without one.</p>
+  <div class="row"><button class="btn" id="ghgo">Continue with GitHub</button><button class="lk" id="ghno" style="background:none;border:0;cursor:pointer">Not now</button></div>
+</dialog>
+
 <footer><div class="wrap">
   <div class="foot">
     <div><h3>Youth AI Lab · Platform for educational teams</h3><p>Free resources to prepare and run a workshop on AI with young people aged 12 to 25.</p><img src="maquette-assets/eu_co-funded_fr.png" alt="Co-funded by the European Union"></div>
@@ -949,7 +1021,7 @@ You give neither medical nor legal advice.</pre>
 
   <span>Content under the Creative Commons BY-SA 4.0 licence. Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Version V0.216 · mock-up · 19 October 2026</div></div>
+<div class="demo"><div class="wrap">Version V0.217 · mock-up · 19 October 2026</div></div>
 <script>
 const PHASES = ['', 'Observation', 'Hypotheses', 'Experimentation', 'Validation', 'Reflection', 'Communication'];
 const THEMES = { gen: 'Generative AI', ml: 'Machine learning', rob: 'Robotics and sensors', eth: 'Ethics and critical thinking' };
@@ -1465,8 +1537,9 @@ function renderRetour(id) {
 }
 const PARTNERS = ['L.A.B, France', 'Vent des Îles, France', 'UAB, Catalonia', 'Digitale Wolven, Belgium', 'Perlatecnica, Italy'];
 // fiches pratiques classées par besoin de l'équipe d'animation ; sans lien = exemple de fiche à venir, non cliquable
-const FPCAT = { choix: 'Choosing a tool', main: 'Getting to grips with a tool', expl: 'Explaining how AI works', prec: 'Taking precautions' };
+const FPCAT = { qa: 'Questions and answers', choix: 'Choosing a tool', main: 'Getting to grips with a tool', expl: 'Explaining how AI works', prec: 'Taking precautions' };
 const FPS = [
+  ['qa', 'Questions and answers about AI', '#qa', 'Understanding, good practices, data'],
   ['choix', 'Choosing an AI tool for a group of young people'],
   ['choix', 'Free or paid: what an account allows'],
   ['main', 'Understanding and using system prompts', '#pratique', 'Claude Projects, Gemini Gems'],
@@ -1478,6 +1551,88 @@ const FPS = [
   ['prec', 'Checking an AI answer with a group']
 ];
 let fpCat = '';
+
+// Questions sur l'IA et bonnes pratiques (exemples écrits par Claude, à relire par le consortium)
+const QA = [
+  ['Understanding AI', [
+    ['What do we mean by AI?', 'AI refers to programs that learn from large amounts of data to recognise patterns, then use them to classify, predict or generate content. A chatbot, a recommendation feed and a translator all rely on it, but they do different things.'],
+    ['Does a chatbot understand what I write?', 'Not in the way a person does. A language model calculates which words are likely to come next, based on the texts it was trained on. The result can sound very sure of itself without the tool knowing whether it is true.'],
+    ['Why does AI make things up?', 'A language model produces a plausible answer, not a verified one. When it lacks information, it can invent a fact, a quotation or a source in the same confident tone. This is why an answer always needs checking.'],
+    ['Is AI biased?', 'Yes, it can be. A model reproduces the patterns of its training data, including stereotypes and the absence of certain groups. The people who design it also choose what it is optimised for. Testing the tool with varied examples helps to bring these biases to light.']]],
+  ['Good practices', [
+    ['How do I check an AI answer?', 'Choose one precise point in the answer, then look for it in a reliable source that you can identify. Open the sources that the tool cites, because they may not exist or may not say what it claims.'],
+    ['How do I write a good request?', 'Say what you want, for whom and in what form, then add an example if you have one. Read the answer, then correct your request. The practical sheet on system prompts goes further.', '#pratique', 'Understanding and using system prompts'],
+    ['Can I use AI to prepare my workshops?', 'Yes, for finding ideas, adapting a text or preparing examples. Check the content before using it, and try out with the tool anything that you plan to do with the group.'],
+    ['Should I say when something was made with AI?', 'Yes. Saying which tool was used and for what is a good habit, for the facilitation team as for young people. It also opens up a discussion about what the person did and what the machine did.']]],
+  ['With young people', [
+    ['From what age can young people use an AI tool?', 'It depends on the tool and the country. Read the terms of use before each workshop, because the minimum age varies and parental consent may be required. If young people are too young, the facilitation team can use the tool in front of the group.'],
+    ['Should young people have their own accounts?', 'Not necessarily. An account held by the facilitation team avoids collecting their personal data. Many activities can also be run unplugged or with tools that require no account.'],
+    ['What if a young person relies on AI for everything?', 'Ask them to explain the answer in their own words, then to check one point of it. This shows what the tool can do and what it cannot do, without forbidding it.']]],
+  ['Data and rights', [
+    ['What should never be typed into an AI tool?', 'Personal data: names, addresses, photos, and health or family details, whether they concern you, a young person or anyone else. What you type can be stored and, depending on the settings, used to train the tool.'],
+    ['Who owns what an AI produces?', 'The answer depends on the country and on the terms of the tool, and the law is still changing. Read the terms, and take care with content that imitates a recognisable work or a real person.'],
+    ['Does AI use a lot of energy?', 'Training and using AI models consumes electricity and water in data centres. Estimates vary widely depending on the tool and the task. A good practice is to use it when it is really useful, and to discuss this with young people.']]]
+];
+function renderQA(open) {
+  let k = 0;
+  $('qa-list').innerHTML = QA.map(([t, qs], n) => `<section class="fg f${n % 4}"><h3><span>${t}</span></h3>${qs.map(([q, r, href, lab]) => `<details class="fq" id="q${k}" ${open === k++ ? 'open' : ''}><summary>${q}</summary><p>${r}</p>${href ? `<p><a class="lk" href="${href}">${lab}</a></p>` : ''}</details>`).join('')}</section>`).join('');
+  $('qnone').hidden = true; $('qsearch').value = '';
+  if (open !== undefined && $('q' + open)) setTimeout(() => $('q' + open).scrollIntoView({ block: 'center' }), 0);
+}
+const QHOME = [1, 2, 9, 12];
+function drawQHome() { const all = QA.flatMap(g => g[1]); $('qhome').innerHTML = QHOME.map(k => `<a href="#qa/${k}">${all[k][0]}</a>`).join(''); }
+// Vocabulaire : « Tools and printables » remplace « Appendices » à l'affichage, les protocoles sources restent intacts
+const relab = h => h.replace(/<h2 id="p-ann">Appendices<\/h2>/, '<h2 id="p-ann">Tools and printables</h2>').replace(/<p><strong>Description of the appendix<\/strong><\/p>/g, '').replace(/\bAppendix (\d+)/g, 'Resource $1').replace(/\bAppendices\b/g, 'Resources').replace(/\bappendices\b/g, 'resources').replace(/\bAppendix\b/g, 'Resource').replace(/\bappendix\b/g, 'resource');
+const NOPRINT = /website|tutorial|background|pre-prompt|examples of productions/i;
+function resBars(art, id) {
+  art.querySelectorAll('.psec[data-ps="p-ann"] h3').forEach(h => {
+    if (!/^Resource \d+/.test(h.textContent)) return;
+    let n = h.nextElementSibling, txt = ''; const last = [];
+    while (n && n.tagName !== 'H3' && last.length < 2) { txt += n.textContent + ' '; last.push(n); n = n.nextElementSibling; }
+    if (NOPRINT.test(txt.slice(0, 90))) return;
+    last[last.length - 1].insertAdjacentHTML('afterend', `<div class="resbar noprint"><a class="btn small" href="#fiche/${id}">Print as PDF</a><a class="lk" href="#fiche/${id}">Edit on Canva</a></div>`);
+  });
+}
+// Impression : la fiche complète, toutes rubriques et étapes ouvertes
+let prOpen = [];
+window.addEventListener('beforeprint', () => { prOpen = [...document.querySelectorAll('.view.on .acc details:not([open])')]; prOpen.forEach(d => d.open = true); });
+window.addEventListener('afterprint', () => { prOpen.forEach(d => d.open = false); prOpen = []; });
+const printHead = a => `<div class="printhead"><img src="maquette-assets/youthailab_rounded.png" alt=""><span>Youth AI Lab · Activity sheet · Phase ${a.ph}</span></div>`;
+const printFoot = () => `<div class="printfoot"><img src="maquette-assets/eu_co-funded_fr.png" alt="Co-funded by the European Union"><span>Youth AI Lab resource under the CC BY-SA 4.0 licence. Printed from the platform for educational teams. Co-funded by the European Union.</span></div>`;
+// Copies personnelles : maquette seulement, la connexion GitHub est simulée et la copie reste dans le navigateur
+let ghWant = null;
+function askDup(id) { if (S.gh) return dupAct(id); ghWant = id; $('ghdlg').showModal(); }
+function dupAct(id) {
+  if (!S.copies[id]) {
+    const a = ACTS.find(x => x.id === id), P = PROT[a.id] || protStd(a), t = document.createElement('div');
+    t.innerHTML = relab(P.html);
+    t.querySelectorAll('.acc details').forEach(d => { const o = document.createElement('div'), h = document.createElement('h3'), s = d.querySelector('summary'); h.textContent = [...s.children].map(c => c.textContent).join(' '); s.remove(); o.append(h, ...d.childNodes); d.replaceWith(o); });
+    t.querySelectorAll('tr').forEach(tr => { const c = tr.querySelector('td'); if (c && /^Exploration phase/.test(c.textContent.trim())) tr.remove(); });
+    let skip = false; [...t.children].forEach(el => { if (el.tagName === 'H2') skip = el.id === 'p-ill' || el.id === 'p-memo'; if (skip) el.remove(); });
+    S.copies[id] = { t: a.t, html: t.innerHTML, at: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) };
+    store.set(S);
+  }
+  location.hash = '#copie/' + id;
+}
+function renderCopie(id) {
+  const a = ACTS.find(x => x.id === id), c = S.copies[id];
+  if (!a || !c) { location.hash = '#espace'; return; }
+  $('copie').innerHTML = `<p class="noprint"><a href="#espace">Back to my space</a></p>${printHead(a)}
+    <div class="phl wkph p${a.ph}"><i></i>My copy · Phase ${a.ph} · ${PHASES[a.ph]}</div>
+    <h1 id="cp-title" contenteditable="true">${esc(c.t)}</h1>
+    <p class="cpnote noprint">This copy of "${esc(a.t)}" was made on ${esc(c.at)} and only you can see it. Click on the text to change it: your changes are saved as you type. The original sheet remains unchanged. If you share your copy, keep the mention of Youth AI Lab and the CC BY-SA 4.0 licence.</p>
+    <div class="actions noprint"><button class="btn" onclick="window.print()">Print</button><a class="lk" href="#fiche/${a.id}">See the original sheet</a><a class="lk" href="#espace/${a.id}" data-prep="${a.id}">Propose my changes as a variant</a><button class="lk" data-cpdel="${a.id}" style="background:none;border:0;cursor:pointer;margin-left:auto">Delete this copy</button></div>
+    <article class="prot" id="cp-body" contenteditable="true">${c.html}</article>${printFoot()}`;
+  const up = () => { c.t = $('cp-title').textContent; c.html = $('cp-body').innerHTML; store.set(S); };
+  $('cp-title').oninput = up; $('cp-body').oninput = up;
+}
+function renderAcct() {
+  const ids = Object.keys(S.copies).map(Number);
+  $('acct').innerHTML = (S.gh
+    ? `<div class="acct"><p>Linked to the GitHub account <b>${esc(S.gh.login)}</b>. Your copies are kept in this account.</p><button class="lk" id="ghout" style="background:none;border:0;cursor:pointer">Unlink my account</button></div>`
+    : `<div class="acct"><p>Link a GitHub account if you want to duplicate activity sheets and change them. This is optional.</p><button class="btn small" id="ghlink">Link my GitHub account</button></div>`)
+    + (ids.length ? ids.map(i => `<div class="cpl"><a class="lk" href="#copie/${i}">${esc(S.copies[i].t)}</a><span class="muted">Copied on ${esc(S.copies[i].at)}</span></div>`).join('') : `<p class="muted">No copy for now. To make one, open an activity sheet and click on "Duplicate in my account".</p>`);
+}
 function renderFP() {
   $('fp-cat').innerHTML = [['', 'All']].concat(Object.entries(FPCAT)).map(([k, l]) => `<button class="${fpCat === k ? 'on' : ''}" data-fpc="${k}">${l}</button>`).join('');
   $('fp').innerHTML = FPS.filter(f => !fpCat || f[0] === fpCat).map(([c, t, href, tools]) => href
@@ -1489,7 +1644,7 @@ const store = {
   get() { try { return JSON.parse(localStorage.getItem('yal-maquette')) || {}; } catch (e) { return {}; } },
   set(v) { try { localStorage.setItem('yal-maquette', JSON.stringify(v)); } catch (e) {} }
 };
-let S = Object.assign({ fav: [], checks: {}, notes: {}, wk: {}, ev: { avant: [], apres: [] }, tk: [] }, store.get());
+let S = Object.assign({ fav: [], checks: {}, notes: {}, wk: {}, ev: { avant: [], apres: [] }, tk: [], gh: null, copies: {} }, store.get());
 if (S.ev && [...S.ev.avant, ...S.ev.apres].some(r => r.length !== 7)) S.ev = { avant: [], apres: [] };
 const save = () => { store.set(S); document.getElementById('favcount').textContent = S.fav.length ? '(' + S.fav.length + ')' : ''; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -1566,22 +1721,21 @@ function renderFiche(id) {
   const on = S.fav.includes(a.id);
   const li = l => l.map(x => `<li>${esc(x)}</li>`).join('');
   $('fiche').innerHTML = `
-  <p class="noprint"><a href="#activites">Back to the activities</a></p>
+  <p class="noprint"><a href="#activites">Back to the activities</a></p>${printHead(a)}
   <div>${tags(a)}</div>
   <h1>${esc(a.t)}</h1>
   <p class="lead">${P ? P.intro : esc(F.bref)}</p>${ORIG[a.id] ? `<p class="aitr">Translated with AI from the original ${ORIG[a.id]} version.</p>` : ''}
   <div class="chips"><div class="chip"><small>Duration</small>${esc(a.d)}</div><div class="chip"><small>Age</small>12 to 25</div><div class="chip"><small>Facilitation level</small>${a.n}</div><div class="chip"><small>Phase</small>${a.ph} · ${PHASES[a.ph]}</div>${P ? '' : `<div class="chip"><small>Sequences</small>${F.steps.length}</div>`}</div>
   <div class="actions noprint">
-    <a class="btn" href="#fiche/${a.id}">Full sheet as PDF</a><a class="lk" href="#fiche/${a.id}">Editable format</a>
-    ${F.print.map(x => `<a class="lk" href="#fiche/${a.id}">${esc(x)}</a>`).join('')}
+    <button class="btn" onclick="window.print()">Print</button><button class="lk" data-dup="${a.id}" style="background:none;border:0;cursor:pointer;font-size:1rem">${S.copies[a.id] ? 'Open my copy' : 'Duplicate in my account'}</button>
     <a class="btn alt" href="#espace/${a.id}" data-prep="${a.id}" style="margin-left:auto">${on ? '★ Prepare in my space' : '☆ Prepare in my space'}</a>
   </div>
-  <nav class="fnav noprint p${a.ph}" aria-label="In this sheet">${P.nav.filter(x => x[0] !== 'p-ill' && x[0] !== 'p-memo').concat([['f-ret', 'Field reports']]).map(([k, l]) => `<button data-ps="${k}">${l}</button>`).join('')}</nav>
-  <div class="two fwide"><article class="prot">${P.html}
+  <nav class="fnav noprint p${a.ph}" aria-label="In this sheet">${P.nav.filter(x => x[0] !== 'p-ill' && x[0] !== 'p-memo').map(x => x[0] === 'p-ann' ? [x[0], 'Tools and printables'] : x).concat([['f-ret', 'Field reports']]).map(([k, l]) => `<button data-ps="${k}">${l}</button>`).join('')}</nav>
+  <div class="two fwide"><article class="prot">${relab(P.html)}
     <h2 id="f-ret">Field reports</h2>
     ${RET.filter(r => r.act === a.id).map(r => { const d = (typeof RETD !== 'undefined' && RETD[r.id]) || {}, n = (d.sequences || []).length; return `<a class="frc p${a.ph}" href="#retour/${r.id}">${r.img ? `<img src="maquette-assets/retours/${r.id}.jpg" alt="">` : '<span class="noimg"></span>'}<span class="frb"><span class="phl"><i></i>${LABS[r.pays]} · ${r.date}</span><b>${esc(r.t)}</b>${d.orientation ? `<span class="frt">${esc(d.orientation)}</span>` : ''}<span class="frm">${r.d}${n ? ' · ' + n + ' sequence' + (n > 1 ? 's' : '') : ''}</span><span class="frl">Read the field report</span></span></a>`; }).join('')}
     <div class="frpub p${a.ph} noprint"><span>After proofreading, your report can be published in "Your field reports" and on the activity sheet.</span><button class="btn" onclick="alert('The mock-up does not include the field report form.')">Write a field report</button></div>
-  </article></div>
+  </article></div>${printFoot()}
   ${(() => { const rows = PARCOURS.map((P, pi) => { const k = P.a.findIndex(x => x[0] === a.id); if (k < 0) return ''; const act = i => ACTS.find(z => z.id === P.a[i][0]); return `<div class="fgor"><div><small>Step ${k + 1} of ${P.a.length} of the pathway</small><a href="#activites/${pi}">${esc(P.t)}</a></div><div class="fgon">${k > 0 ? `<a href="#fiche/${P.a[k - 1][0]}"><small>Before</small>${esc(act(k - 1).t)}</a>` : ''}${k < P.a.length - 1 ? `<a href="#fiche/${P.a[k + 1][0]}"><small>Next</small>${esc(act(k + 1).t)}</a>` : ''}</div></div>`; }).join(''); return rows ? `<div class="fgo noprint"><div class="kick">To go further</div>${rows}</div>` : ''; })()}`;
   { const nv = $('fiche').querySelector('.fnav'), tw = $('fiche').querySelector('.two'); if (nv && tw) tw.prepend(nv); }
   {
@@ -1594,10 +1748,12 @@ function renderFiche(id) {
     art.querySelectorAll('.psec[data-ps="p-ill"], .psec[data-ps="p-memo"]').forEach(x => x.remove());
     const pv = art.querySelector('.psec[data-ps="p-var"]');
     if (pv) pv.insertAdjacentHTML('beforeend', `<h3>Variants proposed by other teams</h3><div class="frpub p${a.ph} noprint"><span>No variant has been published yet. If you adapt this activity, you can propose your adaptation from the Review tab of your space. After proofreading, it can appear here.</span><a class="btn" href="#espace/${a.id}" data-prep="${a.id}">Prepare in my space</a></div>`);
+    resBars(art, a.id);
     const bar = document.createElement('div'); bar.className = 'row psnav noprint'; art.appendChild(bar);
     if (lastFiche !== a.id || !curPs) curPs = P.nav[0][0];
     showPs(curPs);
   }
+  $('fiche').querySelector('.printhead').style.setProperty('--c', `var(--p${a.ph})`); $('fiche').style.setProperty('--c', `var(--p${a.ph})`);
   $('fiche').querySelectorAll('.acc').forEach(acc => { const d = document.createElement('div'); d.className = 'accall noprint'; d.innerHTML = '<button data-accall>Open all</button>'; acc.before(d); });
   lastFiche = a.id;
 }
@@ -1765,6 +1921,7 @@ function renderEspace(id) {
     <div class="wkclr noprint"><button data-wclr="${a.id}">Clear this page</button></div>`;
     return;
   }
+  renderAcct();
   const favs = ACTS.filter(a => S.fav.includes(a.id));
   $('favs').innerHTML = favs.map(a => {
     const st = wkStat(a), nt = S.notes[a.id] || {};
@@ -1779,7 +1936,7 @@ function route() {
   let v = h[0];
   if (!$('v-' + v)) v = 'accueil';
   document.querySelectorAll('.view').forEach(x => x.classList.toggle('on', x.id === 'v-' + v));
-  document.querySelectorAll('[data-nav]').forEach(x => x.classList.toggle('on', x.dataset.nav === (v === 'fiche' ? 'activites' : v === 'pratique' ? 'ia' : v === 'retour' ? 'retours' : v)));
+  document.querySelectorAll('[data-nav]').forEach(x => x.classList.toggle('on', x.dataset.nav === (v === 'fiche' ? 'activites' : v === 'pratique' || v === 'qa' ? 'ia' : v === 'copie' ? 'espace' : v === 'retour' ? 'retours' : v)));
   if (v === 'accueil' && h[1] && PARCOURS[+h[1]]) { pcur = +h[1]; drawParcours(); }
   if (v === 'activites') { const pn = h[1] !== undefined && h[1] !== '' && PARCOURS[+h[1]] ? +h[1] : null; aTab = pn === null ? 0 : 1; renderCards(); if (pn !== null) { setTimeout(() => { const t = $('path-' + pn); if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 100 }); }, 0); lastV = v; return; } }
   if (v === 'fiche') renderFiche(+h[1]);
@@ -1789,10 +1946,18 @@ function route() {
   if (v === 'demarche') { if (h[1] && GS[+h[1]] !== undefined) gcur = GS[+h[1]]; else if (lastV !== 'demarche') gcur = null; renderGuide(); }
   lastV = v;
   if (v === 'ia') renderFP();
+  if (v === 'qa') renderQA(h[1] === undefined ? undefined : +h[1]);
+  if (v === 'copie') renderCopie(+h[1]);
   window.scrollTo(0, 0);
 }
 
 document.addEventListener('click', e => {
+  const du = e.target.closest('[data-dup]'); if (du) { askDup(+du.dataset.dup); return; }
+  const cd = e.target.closest('[data-cpdel]'); if (cd) { if (confirm('Delete this copy? Your changes will be lost.')) { delete S.copies[cd.dataset.cpdel]; store.set(S); location.hash = '#espace'; } return; }
+  if (e.target.id === 'ghlink') { ghWant = null; $('ghdlg').showModal(); return; }
+  if (e.target.id === 'ghout') { S.gh = null; store.set(S); renderAcct(); return; }
+  if (e.target.id === 'ghno') { $('ghdlg').close(); return; }
+  if (e.target.id === 'ghgo') { S.gh = { login: 'my-github-account' }; store.set(S); $('ghdlg').close(); if (ghWant) dupAct(ghWant); else renderAcct(); return; }
   const pr = e.target.closest('[data-prep]'); if (pr) { const id = +pr.dataset.prep; if (!S.fav.includes(id)) { S.fav.push(id); save(); } return; }
   const uf = e.target.closest('[data-unfav]'); if (uf) { const id = +uf.dataset.unfav; S.fav = S.fav.filter(x => x !== id); save(); location.hash = '#espace'; return; }
   const phd = e.target.closest('[data-phd]'); if (phd) { const [id, i] = phd.dataset.phd.split(':'); WKPH[id].splice(+i, 1); route0(); return; }
@@ -1880,6 +2045,11 @@ document.addEventListener('click', e => { const l = document.querySelector('.lan
 document.addEventListener('input', e => {
   const nk = e.target.dataset && e.target.dataset.note;
   if (nk) { const [id, key] = nk.split(':'); S.notes[id] = Object.assign({}, S.notes[id], { [key]: e.target.value }); save(); if ($('n-msg')) $('n-msg').textContent = 'Saved in this browser'; return; }
+  if (e.target.id === 'qsearch') {
+    const nq = x => x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''), q = nq(e.target.value.trim()); let any = false;
+    document.querySelectorAll('#qa-list .fg').forEach(g => { let n = 0; g.querySelectorAll('.fq').forEach(b => { const ok = !q || nq(b.textContent).includes(q); b.hidden = !ok; if (ok) n++; }); g.hidden = !n; if (n) any = true; });
+    $('qnone').hidden = any; if (!any) $('qn-q').value = e.target.value; return;
+  }
   if (e.target.id !== 'fsearch') return;
   const norm = x => x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const q = norm(e.target.value.trim()); let any = false;
@@ -1929,6 +2099,7 @@ $('imp').onchange = e => {
 $('wipe').onclick = () => { if (confirm('Delete the favourites, notes and ticked lists from this browser?')) { S = { fav: [], checks: {}, notes: {} }; save(); route0(); } };
 
 document.querySelectorAll('.tabset').forEach(set => { set.querySelector('.pane').innerHTML = TABS[set.querySelector('.tab').dataset.tab]; });
+drawQHome();
 $('fp-check').innerHTML = ['The account is held by the facilitation team.', 'The minimum age required by the tool has been checked.', 'No personal data is entered.', 'A test question confirms that the system prompt is taken into account.'].map((it, i) => `<li><input type="checkbox" id="fp${i}"><label for="fp${i}"><span>${esc(it)}</span></label></li>`).join('');
 $('copy').onclick = () => { try { navigator.clipboard.writeText($('prompt').textContent); } catch (e) {} $('copy').textContent = 'System prompt copied'; };
 renderSituation($('situation-guide'));
