@@ -992,7 +992,7 @@ You give neither medical nor legal advice.</pre>
   <div id="esp-one" hidden></div>
   <div id="esp-list">
   <h1>My space</h1>
-  <p class="lead" id="esp-lead">This personal space is yours. Prepare your workshops and keep your notes here. You can also write a field report after a session. Your work stays in the browser you are using, with no automatic sharing, and you do not need an account. Export it to back it up or move it to another device.</p>
+  <p class="lead" id="esp-lead">Prepare your workshops, keep your notes and write your field reports here. You do not need an account: your work stays in this browser, and you can export it to back it up or move it to another device. Sign in with GitHub if you also want to modify your own copy of the activity sheets.</p>
   <div id="acct"></div>
   <div class="esph"><h2>My workshops</h2><a class="btn" href="#activites">Add a workshop</a></div>
   <div id="favs" class="espg"></div>
@@ -1038,7 +1038,7 @@ You give neither medical nor legal advice.</pre>
 
   <span>Content under the Creative Commons BY-SA 4.0 licence. Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Version V0.223 · mock-up · 19 October 2026</div></div>
+<div class="demo"><div class="wrap">Version V0.224 · mock-up · 19 October 2026</div></div>
 <script>
 const PHASES = ['', 'Observation', 'Hypotheses', 'Experimentation', 'Validation', 'Reflection', 'Communication'];
 const THEMES = { gen: 'Generative AI', ml: 'Machine learning', rob: 'Robotics and sensors', eth: 'Ethics and critical thinking' };
@@ -1618,16 +1618,22 @@ const printHead = a => `<div class="printhead"><img src="maquette-assets/youthai
 const printFoot = () => `<div class="printfoot"><img src="maquette-assets/eu_co-funded_en.png" alt="Co-funded by the European Union"><span>Youth AI Lab resource under the CC BY-SA 4.0 licence. Printed from the platform for educational teams. Co-funded by the European Union.</span></div>`;
 // Copies personnelles : maquette seulement, la connexion GitHub est simulée et la copie reste dans le navigateur
 let varId = null;
-function makeCopy(id) {
-  if (S.copies[id]) return;
+function sheetHtml(id) {
   const a = ACTS.find(x => x.id === id), P = PROT[a.id] || protStd(a), t = document.createElement('div');
     t.innerHTML = relab(P.html);
     t.querySelectorAll('.acc details').forEach(d => { const o = document.createElement('div'), h = document.createElement('h3'), s = d.querySelector('summary'); h.textContent = [...s.children].map(c => c.textContent).join(' '); s.remove(); o.append(h, ...d.childNodes); d.replaceWith(o); });
     t.querySelectorAll('tr').forEach(tr => { const c = tr.querySelector('td'); if (c && /^Exploration phase/.test(c.textContent.trim())) tr.remove(); });
     let skip = false; [...t.children].forEach(el => { if (el.tagName === 'H2') skip = el.id === 'p-ill' || el.id === 'p-memo'; if (skip) el.remove(); });
-    S.copies[id] = { t: a.t, html: t.innerHTML, at: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) };
-    store.set(S);
+    return t.innerHTML;
 }
+function makeCopy(id) {
+  if (S.copies[id]) return;
+  S.copies[id] = { t: ACTS.find(x => x.id === id).t, html: sheetHtml(id), at: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) };
+  store.set(S);
+}
+const sheetLocked = a => `<div class="acct noprint"><p>To change the text of this sheet, sign in with GitHub: your own private copy is kept in your account. An account is optional, and you can prepare your workshop without one.</p><button class="btn small" id="ghlink">Sign in to modify</button></div>
+    <div class="actions noprint"><button class="btn" onclick="window.print()">Print this sheet</button><a class="lk" href="#fiche/${a.id}">See the original sheet</a></div>
+    ${printHead(a)}<article class="prot">${sheetHtml(a.id)}</article>${printFoot()}`;
 const sheetPane = a => { const c = S.copies[a.id]; return `<p class="cpnote noprint">This is your own copy of the sheet, made on ${esc(c.at)}. Only you can see it. Click on the text to change it: your changes are saved as you type. The original sheet remains unchanged. If you share your copy, keep the mention of Youth AI Lab and the CC BY-SA 4.0 licence.</p>
     <div class="actions noprint"><button class="btn" onclick="window.print()">Print my sheet</button><a class="lk" href="#fiche/${a.id}">See the original sheet</a>${c.prop ? `<span class="wks sent">Proposed on ${esc(c.prop.at)}, awaiting proofreading</span>` : `<button class="lk" data-cpvar="${a.id}" style="background:none;border:0;cursor:pointer;font-size:1rem">Propose my changes as a variant</button>`}<button class="lk" data-cpdel="${a.id}" style="background:none;border:0;cursor:pointer;margin-left:auto">Start again from the original</button></div>
     ${printHead(a)}<article class="prot" id="cp-body" contenteditable="true">${c.html}</article>${printFoot()}`; };
@@ -1635,8 +1641,8 @@ function ghUI() { $('ghdot').hidden = !S.gh; }
 function renderAcct() {
   S.copies = S.copies || {}; ghUI();
   $('esp-lead').textContent = S.gh
-    ? 'Your workshops and notes are kept in your GitHub account, so you can find them on any device. Each workshop comes with your own copy of the activity sheet, which you can change in the My sheet tab.'
-    : 'This personal space is yours. Prepare your workshops and keep your notes here. You can also write a field report after a session. Your work stays in the browser you are using, with no automatic sharing, and you do not need an account. Export it to back it up or move it to another device.';
+    ? 'Your workshops and notes are kept in your GitHub account, so you can find them on any device. You can change your own copy of the activity sheet in the My sheet tab of each workshop.'
+    : 'Prepare your workshops, keep your notes and write your field reports here. You do not need an account: your work stays in this browser, and you can export it to back it up or move it to another device. Sign in with GitHub if you also want to modify your own copy of the activity sheets.';
   $('acct').innerHTML = S.gh
     ? `<div class="acct"><p>Signed in with GitHub as <b>${esc(S.gh.login)}</b>.</p><button class="lk" id="ghout" style="background:none;border:0;cursor:pointer">Sign out</button></div>`
     : `<div class="acmp"><div><h3>Without an account</h3><ul><li>Prepare your workshops from the activity sheet.</li><li>Keep your notes and write your field reports.</li><li>Print the activity sheets.</li></ul><p class="muted">Your work stays in this browser.</p></div>
@@ -1738,7 +1744,7 @@ function renderFiche(id) {
   <div class="chips"><div class="chip"><small>Duration</small>${esc(a.d)}</div><div class="chip"><small>Age</small>12 to 25</div><div class="chip"><small>Facilitation level</small>${a.n}</div><div class="chip"><small>Phase</small>${a.ph} · ${PHASES[a.ph]}</div>${P ? '' : `<div class="chip"><small>Sequences</small>${F.steps.length}</div>`}</div>
   <div class="actions noprint">
     <button class="btn" onclick="window.print()">Print</button>
-    <a class="btn alt" href="#espace/${a.id}" data-prep="${a.id}" style="margin-left:auto">${on ? '★' : '☆'} ${S.gh ? 'Prepare and modify' : 'Prepare in my space'}</a>
+    <a class="btn alt" href="#espace/${a.id}" data-prep="${a.id}" style="margin-left:auto">${on ? '★' : '☆'} Prepare and modify</a>
   </div>
   <nav class="fnav noprint p${a.ph}" aria-label="In this sheet">${P.nav.filter(x => x[0] !== 'p-ill' && x[0] !== 'p-memo').map(x => x[0] === 'p-ann' ? [x[0], 'Tools and printables'] : x).concat([['f-ret', 'Field reports']]).map(([k, l]) => `<button data-ps="${k}">${l}</button>`).join('')}</nav>
   <div class="two fwide"><article class="prot">${relab(P.html)}
@@ -1757,7 +1763,7 @@ function renderFiche(id) {
     art.querySelectorAll('.psec[data-ps="p-id"] tr').forEach(tr => { const c = tr.querySelector('td'); if (c && /^Exploration phase/.test(c.textContent.trim())) tr.remove(); });
     art.querySelectorAll('.psec[data-ps="p-ill"], .psec[data-ps="p-memo"]').forEach(x => x.remove());
     const pv = art.querySelector('.psec[data-ps="p-var"]');
-    if (pv) pv.insertAdjacentHTML('beforeend', `<h3>Variants proposed by other teams</h3><div class="frpub p${a.ph} noprint"><span>No variant has been published yet. If you adapt this activity, you can propose your adaptation from the Review tab of your space. After proofreading, it can appear here.</span><a class="btn" href="#espace/${a.id}" data-prep="${a.id}">${S.gh ? 'Prepare and modify' : 'Prepare in my space'}</a></div>`);
+    if (pv) pv.insertAdjacentHTML('beforeend', `<h3>Variants proposed by other teams</h3><div class="frpub p${a.ph} noprint"><span>No variant has been published yet. If you adapt this activity, you can propose your adaptation from the Review tab of your space. After proofreading, it can appear here.</span><a class="btn" href="#espace/${a.id}" data-prep="${a.id}">Prepare and modify</a></div>`);
     resBars(art, a.id);
     const bar = document.createElement('div'); bar.className = 'row psnav noprint'; art.appendChild(bar);
     if (lastFiche !== a.id || !curPs) curPs = P.nav[0][0];
@@ -1869,17 +1875,17 @@ function renderEspace(id) {
   $('esp-one').hidden = !a; $('esp-list').hidden = !!a;
   if (a) {
     if (lastEsp !== a.id) wkTab = 'prep'; lastEsp = a.id;
-    if (S.gh) makeCopy(a.id); else if (wkTab === 'fiche') wkTab = 'prep';
+    if (S.gh) makeCopy(a.id);
     const D = wkData(a), nt = S.notes[a.id] || {}, st = wkStat(a), tk = (S.wk[a.id] || {}).tasks || [], rs = RET.filter(r => r.act === a.id);
     const fld = (k, lab, ph) => `<div><label for="n-${k}">${lab}</label><input id="n-${k}" data-note="${a.id}:${k}" value="${esc(nt[k])}" placeholder="${ph}"></div>`;
     const area = (k, lab, ph, rows) => `<label for="n-${k}">${lab}</label><textarea id="n-${k}" data-note="${a.id}:${k}" rows="${rows}" placeholder="${ph}">${esc(nt[k])}</textarea>`;
     const cnt = (n, t) => `<span class="wkn">${n} of ${t}</span>`;
     const ph = WKPH[a.id] || [], nRg = nDone(a.id + '-rgpd', RGPD.length);
     const nStep = nDone(a.id + '-step', D.steps.length), nPen = nDone(a.id + '-pendant', D.pendant.length), nApr = nDone(a.id + '-apres', D.apres.length);
-    const tabs = [['prep', 'Prepare', st.tot ? st.n + ' of ' + st.tot : ''], ...(S.gh ? [['fiche', 'My sheet', S.copies[a.id].prop ? 'Proposed' : 'Your copy']] : []), ['jour', 'Facilitate', D.steps.length ? nStep + ' of ' + D.steps.length + ' steps' : ''], ['bilan', 'Review', st.k === 'm' ? 'Started' : '']];
+    const tabs = [['prep', 'Prepare', st.tot ? st.n + ' of ' + st.tot : ''], ['fiche', 'My sheet', !S.gh ? 'Sign in to modify' : S.copies[a.id].prop ? 'Proposed' : 'Your copy'], ['jour', 'Facilitate', D.steps.length ? nStep + ' of ' + D.steps.length + ' steps' : ''], ['bilan', 'Review', st.k === 'm' ? 'Started' : '']];
     const wx = (f, lab) => `<div class="wxr"><small>${lab}</small><div>${Object.keys(WX).map(k => `<button class="wxb ${nt[f] === k ? 'on' : ''}" data-wx="${a.id}:${f}:${k}" aria-pressed="${nt[f] === k}">${wxIcon(k)}<span>${WXL[k]}</span></button>`).join('')}</div></div>`;
     const panes = {
-      fiche: S.gh ? sheetPane(a) : '',
+      fiche: S.gh ? sheetPane(a) : sheetLocked(a),
       prep: `<div class="chk wkinfo noprint"><div class="cnotes"><h3>The workshop</h3>
           <div class="wkf">${fld('date', 'Date', 'Wednesday 18 November')}${fld('heure', 'Time', '2 pm to 5 pm')}${fld('lieu', 'Place', 'Youth centre room')}${fld('groupe', 'Group', '10 young people aged 12 to 15')}${fld('equipe', 'Facilitation team', '2 people')}</div></div></div>
       <div class="wk">
@@ -1927,11 +1933,11 @@ function renderEspace(id) {
     <div class="phl wkph p${a.ph}"><i></i>Phase ${a.ph} · ${PHASES[a.ph]}</div>
     <h1>${esc(a.t)}</h1>
     <div class="wkhead"><span class="wks ${st.k}">${st.lab}</span>${[nt.date, nt.heure, nt.lieu, nt.groupe].filter(Boolean).map(x => `<span>${esc(x)}</span>`).join('')}
-      <span class="noprint" style="margin-left:auto"><a class="lk" href="#fiche/${a.id}">Open the activity sheet</a>${S.gh ? '' : ` <button class="lk" id="ghlink">Sign in to change this sheet</button>`} <button class="lk" data-unfav="${a.id}">Remove from my space</button></span></div>
-    <div class="wtabs ${S.gh ? 't4' : ''} p${a.ph} noprint">${tabs.map(([k, l, c], i) => `<button class="${k === wkTab ? 'on' : ''}" data-wt="${k}"><b>${i + 1}</b><span>${l}<small>${c}</small></span></button>`).join('')}</div>
+      <span class="noprint" style="margin-left:auto"><a class="lk" href="#fiche/${a.id}">Open the activity sheet</a> <button class="lk" data-unfav="${a.id}">Remove from my space</button></span></div>
+    <div class="wtabs t4 p${a.ph} noprint">${tabs.map(([k, l, c], i) => `<button class="${k === wkTab ? 'on' : ''}" data-wt="${k}"><b>${i + 1}</b><span>${l}<small>${c}</small></span></button>`).join('')}</div>
     <div class="wkp${a.ph}">${panes[wkTab]}</div>
     ${wkTab === 'fiche' ? '' : `<div class="wkclr noprint"><button data-wclr="${a.id}">Clear this page</button></div>`}`;
-    if (wkTab === 'fiche') $('cp-body').oninput = () => { S.copies[a.id].html = $('cp-body').innerHTML; store.set(S); };
+    if (wkTab === 'fiche' && S.gh) $('cp-body').oninput = () => { S.copies[a.id].html = $('cp-body').innerHTML; store.set(S); };
     return;
   }
   renderAcct();
@@ -1941,7 +1947,7 @@ function renderEspace(id) {
     return `<a class="wkc p${a.ph}" href="#espace/${a.id}"><div class="wkct"><div class="phl"><i></i>Phase ${a.ph} · ${PHASES[a.ph]}</div><span class="wks ${st.k}">${st.lab}</span></div><h3>${esc(a.t)}</h3>
       ${[nt.date, nt.heure, nt.lieu, nt.groupe].some(Boolean) ? `<div class="wkm">${[nt.date, nt.heure, nt.lieu, nt.groupe].filter(Boolean).map(esc).join(' · ')}</div>` : ''}
       ${st.tot ? `<div class="wkp"><div class="prog"><i style="width:${st.n / st.tot * 100}%"></i></div><span>Preparation ${st.n} of ${st.tot}</span></div>` : ''}</a>`;
-  }).join('') || `<p class="muted espv">No workshop for now. To add one, open an activity sheet and click on "${S.gh ? 'Prepare and modify' : 'Prepare in my space'}".</p>`;
+  }).join('') || `<p class="muted espv">No workshop for now. To add one, open an activity sheet and click on "Prepare and modify".</p>`;
 }
 
 function route() {
