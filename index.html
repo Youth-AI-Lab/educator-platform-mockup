@@ -1038,7 +1038,7 @@ You give neither medical nor legal advice.</pre>
 
   <span>Content under the Creative Commons BY-SA 4.0 licence. Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Version V0.222 · mock-up · 19 October 2026</div></div>
+<div class="demo"><div class="wrap">Version V0.223 · mock-up · 19 October 2026</div></div>
 <script>
 const PHASES = ['', 'Observation', 'Hypotheses', 'Experimentation', 'Validation', 'Reflection', 'Communication'];
 const THEMES = { gen: 'Generative AI', ml: 'Machine learning', rob: 'Robotics and sensors', eth: 'Ethics and critical thinking' };
@@ -1738,7 +1738,7 @@ function renderFiche(id) {
   <div class="chips"><div class="chip"><small>Duration</small>${esc(a.d)}</div><div class="chip"><small>Age</small>12 to 25</div><div class="chip"><small>Facilitation level</small>${a.n}</div><div class="chip"><small>Phase</small>${a.ph} · ${PHASES[a.ph]}</div>${P ? '' : `<div class="chip"><small>Sequences</small>${F.steps.length}</div>`}</div>
   <div class="actions noprint">
     <button class="btn" onclick="window.print()">Print</button>
-    <a class="btn alt" href="#espace/${a.id}" data-prep="${a.id}" style="margin-left:auto">${on ? '★ Prepare in my space' : '☆ Prepare in my space'}</a>
+    <a class="btn alt" href="#espace/${a.id}" data-prep="${a.id}" style="margin-left:auto">${on ? '★' : '☆'} ${S.gh ? 'Prepare and modify' : 'Prepare in my space'}</a>
   </div>
   <nav class="fnav noprint p${a.ph}" aria-label="In this sheet">${P.nav.filter(x => x[0] !== 'p-ill' && x[0] !== 'p-memo').map(x => x[0] === 'p-ann' ? [x[0], 'Tools and printables'] : x).concat([['f-ret', 'Field reports']]).map(([k, l]) => `<button data-ps="${k}">${l}</button>`).join('')}</nav>
   <div class="two fwide"><article class="prot">${relab(P.html)}
@@ -1757,7 +1757,7 @@ function renderFiche(id) {
     art.querySelectorAll('.psec[data-ps="p-id"] tr').forEach(tr => { const c = tr.querySelector('td'); if (c && /^Exploration phase/.test(c.textContent.trim())) tr.remove(); });
     art.querySelectorAll('.psec[data-ps="p-ill"], .psec[data-ps="p-memo"]').forEach(x => x.remove());
     const pv = art.querySelector('.psec[data-ps="p-var"]');
-    if (pv) pv.insertAdjacentHTML('beforeend', `<h3>Variants proposed by other teams</h3><div class="frpub p${a.ph} noprint"><span>No variant has been published yet. If you adapt this activity, you can propose your adaptation from the Review tab of your space. After proofreading, it can appear here.</span><a class="btn" href="#espace/${a.id}" data-prep="${a.id}">Prepare in my space</a></div>`);
+    if (pv) pv.insertAdjacentHTML('beforeend', `<h3>Variants proposed by other teams</h3><div class="frpub p${a.ph} noprint"><span>No variant has been published yet. If you adapt this activity, you can propose your adaptation from the Review tab of your space. After proofreading, it can appear here.</span><a class="btn" href="#espace/${a.id}" data-prep="${a.id}">${S.gh ? 'Prepare and modify' : 'Prepare in my space'}</a></div>`);
     resBars(art, a.id);
     const bar = document.createElement('div'); bar.className = 'row psnav noprint'; art.appendChild(bar);
     if (lastFiche !== a.id || !curPs) curPs = P.nav[0][0];
@@ -1941,7 +1941,7 @@ function renderEspace(id) {
     return `<a class="wkc p${a.ph}" href="#espace/${a.id}"><div class="wkct"><div class="phl"><i></i>Phase ${a.ph} · ${PHASES[a.ph]}</div><span class="wks ${st.k}">${st.lab}</span></div><h3>${esc(a.t)}</h3>
       ${[nt.date, nt.heure, nt.lieu, nt.groupe].some(Boolean) ? `<div class="wkm">${[nt.date, nt.heure, nt.lieu, nt.groupe].filter(Boolean).map(esc).join(' · ')}</div>` : ''}
       ${st.tot ? `<div class="wkp"><div class="prog"><i style="width:${st.n / st.tot * 100}%"></i></div><span>Preparation ${st.n} of ${st.tot}</span></div>` : ''}</a>`;
-  }).join('') || '<p class="muted espv">No workshop for now. To add one, open an activity sheet and click on "Prepare in my space".</p>';
+  }).join('') || `<p class="muted espv">No workshop for now. To add one, open an activity sheet and click on "${S.gh ? 'Prepare and modify' : 'Prepare in my space'}".</p>`;
 }
 
 function route() {
