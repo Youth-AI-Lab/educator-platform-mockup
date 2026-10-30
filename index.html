@@ -714,6 +714,13 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
 .cpnote { background: var(--blue-soft); border-radius: 4px; padding: 14px 18px; margin: 0 0 22px; }
 #cp-body { outline: none; } #cp-body:focus { box-shadow: 0 0 0 2px var(--blue); border-radius: 4px; }
 #cp-title { outline: none; }
+.acmp { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 8px 0 36px; } .acmp > div { background: var(--blue-soft); border-radius: 4px; padding: 20px 24px; } .acmp > div:first-child { background: #f4f4f4; }
+.acmp h3 { margin: 0 0 8px; } .acmp ul { margin: 0 0 12px; padding-left: 20px; } .acmp p { margin: 0; }
+@media (max-width: 900px) { .acmp { grid-template-columns: 1fr; } }
+.ghdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--green); margin-left: 6px; } .ghdot[hidden] { display: none; }
+#vardlg { border: 1px solid var(--ink); border-radius: 6px; padding: 28px 30px; max-width: 520px; width: 100%; } #vardlg::backdrop { background: rgba(0, 0, 0, .35); }
+#vardlg h3 { margin: 0 0 10px; } #vardlg textarea { width: 100%; margin-top: 6px; } #vardlg .row { margin-top: 18px; gap: 18px; align-items: center; }
+.wks.sent { background: var(--yellow-soft); }
 @media (max-width: 900px) { .qhome { grid-template-columns: 1fr; } }
 @page { size: A4; margin: 17mm 16mm 19mm;
   @bottom-left { content: "Youth AI Lab · CC BY-SA 4.0"; font: 8.5pt Assistant, sans-serif; color: #595959; }
@@ -753,7 +760,7 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
     <a href="#retours" data-nav="retours">Field reports</a>
   </nav>
   <div class="tools">
-    <a href="#espace" data-nav="espace">My space <span id="favcount"></span></a>
+    <a href="#espace" data-nav="espace">My space <span id="favcount"></span><i class="ghdot" id="ghdot" hidden title="GitHub account linked"></i></a>
     <details class="lang"><summary aria-label="Language: English" title="Language">EN</summary><div><a class="on">English</a><a>Français</a><a>Italiano</a><a>Català</a><a>Nederlands</a></div></details>
   </div>
 </div></header>
@@ -985,11 +992,11 @@ You give neither medical nor legal advice.</pre>
   <div id="esp-one" hidden></div>
   <div id="esp-list">
   <h1>My space</h1>
-  <p class="lead">This personal space is yours. Prepare your workshops and keep your notes here. You can also write a field report after a session. Your work stays in the browser you are using, with no automatic sharing, and you do not need an account. Export it to back it up or move it to another device.</p>
+  <p class="lead" id="esp-lead">This personal space is yours. Prepare your workshops and keep your notes here. You can also write a field report after a session. Your work stays in the browser you are using, with no automatic sharing, and you do not need an account. Export it to back it up or move it to another device.</p>
+  <div id="acct"></div>
+  <div class="kick" id="wk-kick" hidden>In this browser</div>
   <div class="esph"><h2>My workshops</h2><a class="btn" href="#activites">Add a workshop</a></div>
   <div id="favs" class="espg"></div>
-  <div class="esph" style="margin-top:36px"><h2>My copies</h2></div>
-  <div id="acct"></div>
   <div class="espt">
     <div>
       <h3>Back up or change device</h3>
@@ -1013,6 +1020,16 @@ You give neither medical nor legal advice.</pre>
   <div class="row"><button class="btn" id="ghgo">Continue with GitHub</button><button class="lk" id="ghno" style="background:none;border:0;cursor:pointer">Not now</button></div>
 </dialog>
 
+<dialog id="vardlg" aria-labelledby="vardlg-t">
+  <form id="varform">
+    <h3 id="vardlg-t">Propose your changes as a variant</h3>
+    <p>Your copy will be sent for proofreading from your GitHub account. Once validated, it can appear in the Variants section of the original sheet.</p>
+    <label for="var-note">What did you change, and for which group or context?</label>
+    <textarea id="var-note" rows="4" required></textarea>
+    <div class="row"><button class="btn">Send for proofreading</button><button type="button" class="lk" id="varno" style="background:none;border:0;cursor:pointer">Cancel</button></div>
+  </form>
+</dialog>
+
 <footer><div class="wrap">
   <div class="foot">
     <div><h3>Youth AI Lab · Platform for educational teams</h3><p>Free resources to prepare and run a workshop on AI with young people aged 12 to 25.</p><img src="maquette-assets/eu_co-funded_fr.png" alt="Co-funded by the European Union"></div>
@@ -1022,7 +1039,7 @@ You give neither medical nor legal advice.</pre>
 
   <span>Content under the Creative Commons BY-SA 4.0 licence. Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Version V0.218 · mock-up · 19 October 2026</div></div>
+<div class="demo"><div class="wrap">Version V0.220 · mock-up · 19 October 2026</div></div>
 <script>
 const PHASES = ['', 'Observation', 'Hypotheses', 'Experimentation', 'Validation', 'Reflection', 'Communication'];
 const THEMES = { gen: 'Generative AI', ml: 'Machine learning', rob: 'Robotics and sensors', eth: 'Ethics and critical thinking' };
@@ -1601,7 +1618,7 @@ window.addEventListener('afterprint', () => { prOpen.forEach(d => d.open = false
 const printHead = a => `<div class="printhead"><img src="maquette-assets/youthailab_rounded.png" alt=""><span>Youth AI Lab · Activity sheet · Phase ${a.ph}</span></div>`;
 const printFoot = () => `<div class="printfoot"><img src="maquette-assets/eu_co-funded_fr.png" alt="Co-funded by the European Union"><span>Youth AI Lab resource under the CC BY-SA 4.0 licence. Printed from the platform for educational teams. Co-funded by the European Union.</span></div>`;
 // Copies personnelles : maquette seulement, la connexion GitHub est simulée et la copie reste dans le navigateur
-let ghWant = null;
+let ghWant = null, varId = null;
 function askDup(id) { if (S.gh) return dupAct(id); ghWant = id; $('ghdlg').showModal(); }
 function dupAct(id) {
   if (!S.copies[id]) {
@@ -1617,22 +1634,30 @@ function dupAct(id) {
 }
 function renderCopie(id) {
   const a = ACTS.find(x => x.id === id), c = S.copies[id];
-  if (!a || !c) { location.hash = '#espace'; return; }
+  if (!a || !c || !S.gh) { location.hash = '#espace'; return; }
   $('copie').innerHTML = `<p class="noprint"><a href="#espace">Back to my space</a></p>${printHead(a)}
     <div class="phl wkph p${a.ph}"><i></i>My copy · Phase ${a.ph} · ${PHASES[a.ph]}</div>
     <h1 id="cp-title" contenteditable="true">${esc(c.t)}</h1>
     <p class="cpnote noprint">This copy of "${esc(a.t)}" was made on ${esc(c.at)} and only you can see it. Click on the text to change it: your changes are saved as you type. The original sheet remains unchanged. If you share your copy, keep the mention of Youth AI Lab and the CC BY-SA 4.0 licence.</p>
-    <div class="actions noprint"><button class="btn" onclick="window.print()">Print</button><a class="lk" href="#fiche/${a.id}">See the original sheet</a><a class="lk" href="#espace/${a.id}" data-prep="${a.id}">Propose my changes as a variant</a><button class="lk" data-cpdel="${a.id}" style="background:none;border:0;cursor:pointer;margin-left:auto">Delete this copy</button></div>
+    <div class="actions noprint"><button class="btn" onclick="window.print()">Print</button><a class="lk" href="#fiche/${a.id}">See the original sheet</a>${c.prop ? `<span class="wks sent">Proposed on ${esc(c.prop.at)}, awaiting proofreading</span>` : `<button class="lk" data-cpvar="${a.id}" style="background:none;border:0;cursor:pointer;font-size:1rem">Propose my changes as a variant</button>`}<button class="lk" data-cpdel="${a.id}" style="background:none;border:0;cursor:pointer;margin-left:auto">Delete this copy</button></div>
     <article class="prot" id="cp-body" contenteditable="true">${c.html}</article>${printFoot()}`;
   const up = () => { c.t = $('cp-title').textContent; c.html = $('cp-body').innerHTML; store.set(S); };
   $('cp-title').oninput = up; $('cp-body').oninput = up;
 }
+function ghUI() { $('ghdot').hidden = !S.gh; }
 function renderAcct() {
+  S.copies = S.copies || {}; ghUI();
   const ids = Object.keys(S.copies).map(Number);
-  $('acct').innerHTML = (S.gh
-    ? `<div class="acct"><p>Linked to the GitHub account <b>${esc(S.gh.login)}</b>. Your copies are kept in this account.</p><button class="lk" id="ghout" style="background:none;border:0;cursor:pointer">Unlink my account</button></div>`
-    : `<div class="acct"><p>Link a GitHub account if you want to duplicate activity sheets and change them. This is optional.</p><button class="btn small" id="ghlink">Link my GitHub account</button></div>`)
-    + (ids.length ? ids.map(i => `<div class="cpl"><a class="lk" href="#copie/${i}">${esc(S.copies[i].t)}</a><span class="muted">Copied on ${esc(S.copies[i].at)}</span></div>`).join('') : `<p class="muted">No copy for now. To make one, open an activity sheet and click on "Duplicate in my account".</p>`);
+  $('esp-lead').textContent = S.gh
+    ? 'Your GitHub account is linked. Your copies of activity sheets are kept in this account, so you can find them on any device. Your workshops, notes and field reports stay in this browser: export them to move them to another device.'
+    : 'This personal space is yours. Prepare your workshops and keep your notes here. You can also write a field report after a session. Your work stays in the browser you are using, with no automatic sharing, and you do not need an account. Export it to back it up or move it to another device.';
+  $('acct').innerHTML = S.gh
+    ? `<div class="acct"><p>Signed in with GitHub as <b>${esc(S.gh.login)}</b>.</p><button class="lk" id="ghout" style="background:none;border:0;cursor:pointer">Sign out</button></div>
+       <div class="kick">In my GitHub account</div><div class="esph"><h2>My copies</h2><a class="btn" href="#activites">Duplicate a sheet</a></div>
+       <div style="margin-bottom:36px">${ids.length ? ids.map(i => `<div class="cpl"><a class="lk" href="#copie/${i}">${esc(S.copies[i].t)}</a><span class="muted">${S.copies[i].prop ? `<span class="wks sent">Proposed, awaiting proofreading</span> ` : ''}Copied on ${esc(S.copies[i].at)}</span></div>`).join('') : '<p class="muted">No copy for now. To make one, open an activity sheet and click on "Duplicate in my account".</p>'}</div>`
+    : `<div class="acmp"><div><h3>Without an account</h3><ul><li>Prepare your workshops and keep your notes.</li><li>Write and send your field reports.</li><li>Print the activity sheets.</li></ul><p class="muted">Your work stays in this browser.</p></div>
+       <div><h3>With a GitHub account (optional)</h3><ul><li>Duplicate an activity sheet and change its text.</li><li>Find your copies on any device.</li><li>Propose your copy as a variant of the activity.</li></ul><button class="btn small" id="ghlink">Sign in with GitHub</button></div></div>`;
+  $('wk-kick').hidden = !S.gh;
 }
 function renderFP() {
   $('fp-cat').innerHTML = [['', 'All']].concat(Object.entries(FPCAT)).map(([k, l]) => `<button class="${fpCat === k ? 'on' : ''}" data-fpc="${k}">${l}</button>`).join('');
@@ -1728,7 +1753,7 @@ function renderFiche(id) {
   <p class="lead">${P ? P.intro : esc(F.bref)}</p>${ORIG[a.id] ? `<p class="aitr">Translated with AI from the original ${ORIG[a.id]} version.</p>` : ''}
   <div class="chips"><div class="chip"><small>Duration</small>${esc(a.d)}</div><div class="chip"><small>Age</small>12 to 25</div><div class="chip"><small>Facilitation level</small>${a.n}</div><div class="chip"><small>Phase</small>${a.ph} · ${PHASES[a.ph]}</div>${P ? '' : `<div class="chip"><small>Sequences</small>${F.steps.length}</div>`}</div>
   <div class="actions noprint">
-    <button class="btn" onclick="window.print()">Print</button><button class="lk" data-dup="${a.id}" style="background:none;border:0;cursor:pointer;font-size:1rem">${S.copies[a.id] ? 'Open my copy' : 'Duplicate in my account'}</button>
+    <button class="btn" onclick="window.print()">Print</button><button class="lk" data-dup="${a.id}" style="background:none;border:0;cursor:pointer;font-size:1rem">${S.gh && S.copies[a.id] ? 'Open my copy' : 'Duplicate in my account'}</button>
     <a class="btn alt" href="#espace/${a.id}" data-prep="${a.id}" style="margin-left:auto">${on ? '★ Prepare in my space' : '☆ Prepare in my space'}</a>
   </div>
   <nav class="fnav noprint p${a.ph}" aria-label="In this sheet">${P.nav.filter(x => x[0] !== 'p-ill' && x[0] !== 'p-memo').map(x => x[0] === 'p-ann' ? [x[0], 'Tools and printables'] : x).concat([['f-ret', 'Field reports']]).map(([k, l]) => `<button data-ps="${k}">${l}</button>`).join('')}</nav>
@@ -1957,8 +1982,10 @@ document.addEventListener('click', e => {
   const cd = e.target.closest('[data-cpdel]'); if (cd) { if (confirm('Delete this copy? Your changes will be lost.')) { delete S.copies[cd.dataset.cpdel]; store.set(S); location.hash = '#espace'; } return; }
   if (e.target.id === 'ghlink') { ghWant = null; $('ghdlg').showModal(); return; }
   if (e.target.id === 'ghout') { S.gh = null; store.set(S); renderAcct(); return; }
+  const cv = e.target.closest('[data-cpvar]'); if (cv) { varId = +cv.dataset.cpvar; $('var-note').value = ''; $('vardlg').showModal(); return; }
+  if (e.target.id === 'varno') { $('vardlg').close(); return; }
   if (e.target.id === 'ghno') { $('ghdlg').close(); return; }
-  if (e.target.id === 'ghgo') { S.gh = { login: 'my-github-account' }; store.set(S); $('ghdlg').close(); if (ghWant) dupAct(ghWant); else renderAcct(); return; }
+  if (e.target.id === 'ghgo') { S.gh = { login: 'my-github-account' }; store.set(S); ghUI(); $('ghdlg').close(); if (ghWant) dupAct(ghWant); else renderAcct(); return; }
   const pr = e.target.closest('[data-prep]'); if (pr) { const id = +pr.dataset.prep; if (!S.fav.includes(id)) { S.fav.push(id); save(); } return; }
   const uf = e.target.closest('[data-unfav]'); if (uf) { const id = +uf.dataset.unfav; S.fav = S.fav.filter(x => x !== id); save(); location.hash = '#espace'; return; }
   const phd = e.target.closest('[data-phd]'); if (phd) { const [id, i] = phd.dataset.phd.split(':'); WKPH[id].splice(+i, 1); route0(); return; }
@@ -2097,10 +2124,11 @@ $('imp').onchange = e => {
   const f = e.target.files[0]; if (!f) return;
   f.text().then(t => { try { S = Object.assign({ fav: [], checks: {}, notes: {} }, JSON.parse(t)); save(); route0(); } catch (err) { alert('This file is not a valid backup.'); } });
 };
-$('wipe').onclick = () => { if (confirm('Delete the favourites, notes and ticked lists from this browser?')) { S = { fav: [], checks: {}, notes: {} }; save(); route0(); } };
+$('wipe').onclick = () => { if (confirm('Delete your workshops, notes, ticked lists and copies from this browser, and sign out of GitHub?')) { S = { fav: [], checks: {}, notes: {}, wk: {}, ev: { avant: [], apres: [] }, tk: [], gh: null, copies: {} }; store.set(S); Object.keys(WKPH).forEach(k => delete WKPH[k]); route0(); } };
 
 document.querySelectorAll('.tabset').forEach(set => { set.querySelector('.pane').innerHTML = TABS[set.querySelector('.tab').dataset.tab]; });
-drawQHome();
+drawQHome(); ghUI();
+$('varform').onsubmit = e => { e.preventDefault(); const c = S.copies[varId]; c.prop = { at: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }), note: $('var-note').value }; store.set(S); $('vardlg').close(); renderCopie(varId); };
 $('fp-check').innerHTML = ['The account is held by the facilitation team.', 'The minimum age required by the tool has been checked.', 'No personal data is entered.', 'A test question confirms that the system prompt is taken into account.'].map((it, i) => `<li><input type="checkbox" id="fp${i}"><label for="fp${i}"><span>${esc(it)}</span></label></li>`).join('');
 $('copy').onclick = () => { try { navigator.clipboard.writeText($('prompt').textContent); } catch (e) {} $('copy').textContent = 'System prompt copied'; };
 renderSituation($('situation-guide'));
