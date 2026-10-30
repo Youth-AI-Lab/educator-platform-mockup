@@ -765,7 +765,7 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
   </nav>
   <div class="tools">
     <a href="#espace" data-nav="espace">My space <span id="favcount"></span><i class="ghdot" id="ghdot" hidden title="GitHub account linked"></i></a>
-    <details class="lang"><summary aria-label="Language: English" title="Language">EN</summary><div><a class="on">English</a><a>Français</a><a>Italiano</a><a>Català</a><a>Nederlands</a></div></details>
+    <details class="lang"><summary aria-label="Language: English" title="Language">EN</summary><div><a data-l="en">English</a><a data-l="fr">Français</a><a data-l="it">Italiano</a><a data-l="ca">Català</a><a data-l="nl">Nederlands</a></div></details>
   </div>
 </div></header>
 
@@ -1040,8 +1040,11 @@ You give neither medical nor legal advice.</pre>
 
   <span>Content under the Creative Commons BY-SA 4.0 licence. Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Version V0.225 · mock-up · 19 October 2026</div></div>
+<div class="demo"><div class="wrap">Version V0.226 · mock-up · 19 October 2026</div></div>
 <script>
+// Langue de cette version du site (voir outils-i18n/)
+const LANG = 'en', LOCALE = 'en-GB', EXPL = 'Exploration phase', RES = 'Resource';
+const ORIG_L = { 18: 'fr', 2: 'fr', 8: 'fr', 10: 'fr', 13: 'fr', 6: 'it', 7: 'it', 11: 'it', 12: 'it', 3: 'ca', 4: 'ca', 5: 'ca', 15: 'ca' };
 const PHASES = ['', 'Observation', 'Hypotheses', 'Experimentation', 'Validation', 'Reflection', 'Communication'];
 const THEMES = { gen: 'Generative AI', ml: 'Machine learning', rob: 'Robotics and sensors', eth: 'Ethics and critical thinking' };
 const ACTS = [
@@ -1065,8 +1068,10 @@ const ACTS = [
   { id: 17, ph: 4, t: 'micro:bit CreateAI: Making a game box!', d: '2 hours', dc: 'moyen', n: 'Intermediate', th: ['rob', 'ml'] }
 ];
 // ordre d'affichage : phase, puis niveau de l'équipe d'animation (Beginner d'abord), puis durée croissante
-const DMIN = a => { const r = a.d.match(/(\d+) to (\d+) hours/), m = a.d.match(/(\d+)\s*(?:h\b|hours?)(?:\s*(\d+))?/); return ({ court: 0, moyen: 1, long: 2 }[a.dc]) * 10000 + (r ? (+r[1] + +r[2]) * 30 : m ? +m[1] * 60 + (+m[2] || 0) : 0); };
-const NIV = { Beginner: 0, Intermediate: 1, Advanced: 2 };
+const DM = {"1":20000,"2":150,"3":10180,"4":10180,"5":10170,"6":10150,"7":10150,"8":10150,"9":70,"10":20150,"11":10150,"12":10150,"13":21020,"14":10180,"15":10180,"16":10120,"17":10120,"18":10240};
+const PL = (n, one, many) => n + ' ' + (n > 1 ? many : one);
+const DMIN = a => DM[a.id] || 0;
+const NIV = { 'Beginner': 0, 'Intermediate': 1, 'Advanced': 2 };
 ACTS.sort((a, b) => a.ph - b.ph || NIV[a.n] - NIV[b.n] || DMIN(a) - DMIN(b) || a.id - b.id);
 // language of the original protocol, for the "translated with AI" mention on the activity sheet
 const ORIG = { 18: 'French', 2: 'French', 8: 'French', 10: 'French', 13: 'French', 6: 'Italian', 7: 'Italian', 11: 'Italian', 12: 'Italian', 3: 'Catalan', 4: 'Catalan', 5: 'Catalan', 15: 'Catalan' };
@@ -1474,7 +1479,7 @@ function renderTicket() {
       <div class="field"><label>What I found in this session, two choices at most</label>${TKO.map((o, i) => `<label class="ck"><input type="checkbox" name="tko" value="${i}"> ${o}</label>`).join('')}</div>
       <div class="cols2"><div class="field"><label for="tk-p">What worked well</label><input id="tk-p"></div><div class="field"><label for="tk-d">What should be changed</label><input id="tk-d"></div></div>
       <div class="row"><button class="btn" data-tk="save">Save and move on to the next person</button><button class="lk" data-tk="clear" style="background:none;border:0;cursor:pointer">Clear the answers</button><span class="muted" id="tkmsg"></span></div></div>
-    ${n ? `<div class="evres"><h3>Group summary</h3><p class="muted">${n} answer${n > 1 ? 's' : ''}, average rating of ${moy} out of 4</p>${TKO.map((o, i) => { const c = S.tk.filter(r => r.f.includes(i)).length; return `<div class="evr"><span>${o}</span><div><div class="evb a" style="width:${c / n * 100}%"></div></div></div>`; }).join('')}
+    ${n ? `<div class="evres"><h3>Group summary</h3><p class="muted">${PL(n, 'answer', 'answers')}, average rating of ${moy} out of 4</p>${TKO.map((o, i) => { const c = S.tk.filter(r => r.f.includes(i)).length; return `<div class="evr"><span>${o}</span><div><div class="evb a" style="width:${c / n * 100}%"></div></div></div>`; }).join('')}
       <div class="cols2" style="margin-top:14px"><div><strong>What worked well</strong>${LIST(S.tk.filter(r => r.p).map(r => esc(r.p)))}</div><div><strong>What should be changed</strong>${LIST(S.tk.filter(r => r.d).map(r => esc(r.d)))}</div></div></div>` : ''}`;
 }
 const EVL = ['Never', 'Sometimes', 'Often', 'Always'];
@@ -1485,7 +1490,7 @@ function renderEval() {
   const items = EV.flatMap(g => g[1]);
   const avg = (m, i) => S.ev[m].length ? S.ev[m].reduce((t, r) => t + r[i], 0) / S.ev[m].length : 0;
   let k = 0;
-  el.innerHTML = `<div class="evbar"><div class="seg"><button class="${evMode === 'avant' ? 'on' : ''}" data-ev="avant">At the start · ${S.ev.avant.length} answer${S.ev.avant.length > 1 ? 's' : ''}</button><button class="${evMode === 'apres' ? 'on' : ''}" data-ev="apres">At the end · ${S.ev.apres.length} answer${S.ev.apres.length > 1 ? 's' : ''}</button></div></div>
+  el.innerHTML = `<div class="evbar"><div class="seg"><button class="${evMode === 'avant' ? 'on' : ''}" data-ev="avant">At the start · ${PL(S.ev.avant.length, 'answer', 'answers')}</button><button class="${evMode === 'apres' ? 'on' : ''}" data-ev="apres">At the end · ${PL(S.ev.apres.length, 'answer', 'answers')}</button></div></div>
     <table class="mx"><thead><tr><th></th>${EVL.map(l => `<th>${l}</th>`).join('')}</tr></thead><tbody>${EV.map(([g, its]) => `<tr class="mg"><td colspan="5"><span>${g}</span></td></tr>` + its.map(it => { const i = k++; return `<tr><td>${it}</td>${EVL.map((l, v) => `<td><input type="radio" name="ev${i}" value="${v + 1}" aria-label="${l}"></td>`).join('')}</tr>`; }).join('')).join('')}</tbody></table>
     <div class="row" style="margin:14px 0 4px"><button class="btn" data-ev="save">Save and move on to the next person</button><button class="lk" data-ev="clear" style="background:none;border:0;cursor:pointer">Clear the answers</button><span class="muted" id="evmsg"></span></div>
     ${S.ev.avant.length || S.ev.apres.length ? `<div class="evres"><h3>Group average</h3><p class="muted"><i class="lg a"></i>At the start <i class="lg b"></i>At the end</p>${items.map((it, i) => `<div class="evr"><span>${it}</span><div><div class="evb a" style="width:${avg('avant', i) / 4 * 100}%"></div><div class="evb b" style="width:${avg('apres', i) / 4 * 100}%"></div></div></div>`).join('')}</div>` : ''}`;
@@ -1602,14 +1607,14 @@ const QHOME = [1, 2, 9, 12];
 function drawQHome() { const all = QA.flatMap(g => g[1]); $('qhome').innerHTML = QHOME.map(k => `<a href="#qa/${k}">${all[k][0]}</a>`).join(''); }
 // Vocabulaire : « Tools and printables » remplace « Appendices » à l'affichage, les protocoles sources restent intacts
 const relab = h => h.replace(/<h2 id="p-ann">Appendices<\/h2>/, '<h2 id="p-ann">Tools and printables</h2>').replace(/<p><strong>Description of the appendix<\/strong><\/p>/g, '').replace(/\bAppendix (\d+)/g, 'Resource $1').replace(/\bAppendices\b/g, 'Resources').replace(/\bappendices\b/g, 'resources').replace(/\bAppendix\b/g, 'Resource').replace(/\bappendix\b/g, 'resource');
-const NOPRINT = /website|tutorial|background|pre-prompt|examples of productions/i;
+const NOBAR = {"2":[4,6,7],"13":[2,7]};
 function resBars(art, id) {
+  const re = new RegExp('^' + RES + ' (\\d+)');
   art.querySelectorAll('.psec[data-ps="p-ann"] h3').forEach(h => {
-    if (!/^Resource \d+/.test(h.textContent)) return;
-    let n = h.nextElementSibling, txt = ''; const last = [];
-    while (n && n.tagName !== 'H3' && last.length < 2) { txt += n.textContent + ' '; last.push(n); n = n.nextElementSibling; }
-    if (NOPRINT.test(txt.slice(0, 90))) return;
-    last[last.length - 1].insertAdjacentHTML('afterend', `<div class="resbar noprint"><a class="btn small" href="#fiche/${id}">Print as PDF</a><a class="lk" href="#fiche/${id}">Edit on Canva</a></div>`);
+    const m = h.textContent.match(re); if (!m || (NOBAR[id] || []).includes(+m[1])) return;
+    let n = h.nextElementSibling; const last = [];
+    while (n && n.tagName !== 'H3' && last.length < 2) { last.push(n); n = n.nextElementSibling; }
+    if (last.length) last[last.length - 1].insertAdjacentHTML('afterend', `<div class="resbar noprint"><a class="btn small" href="#fiche/${id}">Print as PDF</a><a class="lk" href="#fiche/${id}">Edit on Canva</a></div>`);
   });
 }
 // Impression : la fiche complète, toutes rubriques et étapes ouvertes
@@ -1624,13 +1629,13 @@ function sheetHtml(id) {
   const a = ACTS.find(x => x.id === id), P = PROT[a.id] || protStd(a), t = document.createElement('div');
     t.innerHTML = relab(P.html);
     t.querySelectorAll('.acc details').forEach(d => { const o = document.createElement('div'), h = document.createElement('h3'), s = d.querySelector('summary'); h.textContent = [...s.children].map(c => c.textContent).join(' '); s.remove(); o.append(h, ...d.childNodes); d.replaceWith(o); });
-    t.querySelectorAll('tr').forEach(tr => { const c = tr.querySelector('td'); if (c && /^Exploration phase/.test(c.textContent.trim())) tr.remove(); });
+    t.querySelectorAll('tr').forEach(tr => { const c = tr.querySelector('td'); if (c && c.textContent.trim().startsWith(EXPL)) tr.remove(); });
     let skip = false; [...t.children].forEach(el => { if (el.tagName === 'H2') skip = el.id === 'p-ill' || el.id === 'p-memo'; if (skip) el.remove(); });
     return t.innerHTML;
 }
 function makeCopy(id) {
   if (S.copies[id]) return;
-  S.copies[id] = { t: ACTS.find(x => x.id === id).t, html: sheetHtml(id), at: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) };
+  S.copies[id] = { t: ACTS.find(x => x.id === id).t, html: sheetHtml(id), at: new Date().toLocaleDateString(LOCALE, { day: 'numeric', month: 'long', year: 'numeric' }) };
   store.set(S);
 }
 const sheetLocked = a => `<div class="acct noprint"><p>To change the text of this sheet, sign in with GitHub: your own private copy is kept in your account. An account is optional, and you can prepare your workshop without one.</p><button class="btn small" id="ghlink">Sign in to modify</button></div>
@@ -1688,13 +1693,13 @@ function renderCards() {
   const nz = x => x.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''), q = nz($('f-q').value.trim());
   const list = ACTS.filter(a => (!d || a.dc === d) && (!n || a.n === n) && (!t || a.th.includes(t)) && (!ph || a.ph === +ph) && (!q || nz(a.t + ' ' + a.th.map(k => THEMES[k]).join(' ')).includes(q)));
   $('cards').innerHTML = list.map(a => cardHtml(a)).join('') || '<p class="muted">No activity matches these filters.</p>';
-  $('f-count').textContent = list.length + ' result' + (list.length > 1 ? 's' : '');
+  $('f-count').textContent = PL(list.length, 'result', 'results');
   // onglet Pathways : les parcours, chacun avec ses trois activités dans l'ordre
   const pg = $('pf-grp').value, pn = $('pf-niv').value, pm = $('pf-mat').value, pt = $('pf-th').value;
   const LV = ['Beginner', 'Intermediate', 'Advanced'];
   const plist = PARCOURS.map((P, i) => { const acts = P.a.map(x => ACTS.find(a => a.id === x[0])), th = [...new Set(acts.flatMap(a => a.th))], lv = Math.max(...acts.map(a => NIV[a.n])), rob = th.includes('rob'); return { P, i, th, lv, rob }; })
     .filter(x => (!pg || x.P.g.includes(+pg)) && (!pn || x.lv <= +pn) && (!pm || x.rob === (pm === '1')) && (!pt || x.th.includes(pt)));
-  $('pf-count').textContent = plist.length + ' pathway' + (plist.length > 1 ? 's' : '');
+  $('pf-count').textContent = PL(plist.length, 'pathway', 'pathways');
   $('paths').innerHTML = plist.map(({ P, i, th, lv, rob }) => `<section class="pathb" id="path-${i}"><div class="pathh"><h2>${esc(P.t)}</h2><div class="pathmeta"><span>${esc(P.tm)}</span><span>Facilitation level: up to ${LV[lv]}</span><span>${rob ? 'Robots or boards needed' : 'No robot needed'}</span></div></div><p class="pathd">${esc(P.d)}</p><details class="pathm"><summary>What this pathway brings</summary><dl>${P.m.filter(([k]) => k !== 'Time').map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}</dl></details><div class="grid g3 agrid">${P.a.map((x, k) => cardHtml(ACTS.find(a => a.id === x[0]), k + 1, x[1])).join('')}</div></section>`).join('') || '<p class="muted">No pathway matches these filters yet. The activities of the first tab can be combined freely.</p>';
   document.querySelectorAll('.atabs .tab').forEach(b => b.classList.toggle('on', +b.dataset.at === aTab));
   document.querySelectorAll('.asec').forEach(x => x.hidden = +x.dataset.asec !== aTab);
@@ -1742,7 +1747,7 @@ function renderFiche(id) {
   <p class="noprint"><a href="#activites">Back to the activities</a></p>${printHead(a)}
   <div>${tags(a)}</div>
   <h1>${esc(a.t)}</h1>
-  <p class="lead">${P ? P.intro : esc(F.bref)}</p>${ORIG[a.id] ? `<p class="aitr">Translated with AI from the original ${ORIG[a.id]} version.</p>` : ''}
+  <p class="lead">${P ? P.intro : esc(F.bref)}</p>${ORIG[a.id] && ORIG_L[a.id] !== LANG ? `<p class="aitr">Translated with AI from the original ${ORIG[a.id]} version.</p>` : ''}
   <div class="chips"><div class="chip"><small>Duration</small>${esc(a.d)}</div><div class="chip"><small>Age</small>12 to 25</div><div class="chip"><small>Facilitation level</small>${a.n}</div><div class="chip"><small>Phase</small>${a.ph} · ${PHASES[a.ph]}</div>${P ? '' : `<div class="chip"><small>Sequences</small>${F.steps.length}</div>`}</div>
   <div class="actions noprint">
     <button class="btn" onclick="window.print()">Print</button>
@@ -1751,7 +1756,7 @@ function renderFiche(id) {
   <nav class="fnav noprint p${a.ph}" aria-label="In this sheet">${P.nav.filter(x => x[0] !== 'p-ill' && x[0] !== 'p-memo').map(x => x[0] === 'p-ann' ? [x[0], 'Tools and printables'] : x).concat([['f-ret', 'Field reports']]).map(([k, l]) => `<button data-ps="${k}">${l}</button>`).join('')}</nav>
   <div class="two fwide"><article class="prot">${relab(P.html)}
     <h2 id="f-ret">Field reports</h2>
-    ${RET.filter(r => r.act === a.id).map(r => { const d = (typeof RETD !== 'undefined' && RETD[r.id]) || {}, n = (d.sequences || []).length; return `<a class="frc p${a.ph}" href="#retour/${r.id}">${r.img ? `<img src="maquette-assets/retours/${r.id}.jpg" alt="">` : '<span class="noimg"></span>'}<span class="frb"><span class="phl"><i></i>${LABS[r.pays]} · ${r.date}</span><b>${esc(r.t)}</b>${d.orientation ? `<span class="frt">${esc(d.orientation)}</span>` : ''}<span class="frm">${r.d}${n ? ' · ' + n + ' sequence' + (n > 1 ? 's' : '') : ''}</span><span class="frl">Read the field report</span></span></a>`; }).join('')}
+    ${RET.filter(r => r.act === a.id).map(r => { const d = (typeof RETD !== 'undefined' && RETD[r.id]) || {}, n = (d.sequences || []).length; return `<a class="frc p${a.ph}" href="#retour/${r.id}">${r.img ? `<img src="maquette-assets/retours/${r.id}.jpg" alt="">` : '<span class="noimg"></span>'}<span class="frb"><span class="phl"><i></i>${LABS[r.pays]} · ${r.date}</span><b>${esc(r.t)}</b>${d.orientation ? `<span class="frt">${esc(d.orientation)}</span>` : ''}<span class="frm">${r.d}${n ? ' · ' + PL(n, 'sequence', 'sequences') : ''}</span><span class="frl">Read the field report</span></span></a>`; }).join('')}
     <div class="frpub p${a.ph} noprint"><span>After proofreading, your report can be published in "Your field reports" and on the activity sheet.</span><button class="btn" onclick="alert('The mock-up does not include the field report form.')">Write a field report</button></div>
   </article></div>${printFoot()}
   ${(() => { const rows = PARCOURS.map((P, pi) => { const k = P.a.findIndex(x => x[0] === a.id); if (k < 0) return ''; const act = i => ACTS.find(z => z.id === P.a[i][0]); return `<div class="fgor"><div><small>Step ${k + 1} of ${P.a.length} of the pathway</small><a href="#activites/${pi}">${esc(P.t)}</a></div><div class="fgon">${k > 0 ? `<a href="#fiche/${P.a[k - 1][0]}"><small>Before</small>${esc(act(k - 1).t)}</a>` : ''}${k < P.a.length - 1 ? `<a href="#fiche/${P.a[k + 1][0]}"><small>Next</small>${esc(act(k + 1).t)}</a>` : ''}</div></div>`; }).join(''); return rows ? `<div class="fgo noprint"><div class="kick">To go further</div>${rows}</div>` : ''; })()}`;
@@ -1762,7 +1767,7 @@ function renderFiche(id) {
       if (el.tagName === 'H2') { cur = document.createElement('section'); cur.className = 'psec'; cur.dataset.ps = el.id; art.insertBefore(cur, el); }
       if (cur) cur.appendChild(el);
     });
-    art.querySelectorAll('.psec[data-ps="p-id"] tr').forEach(tr => { const c = tr.querySelector('td'); if (c && /^Exploration phase/.test(c.textContent.trim())) tr.remove(); });
+    art.querySelectorAll('.psec[data-ps="p-id"] tr').forEach(tr => { const c = tr.querySelector('td'); if (c && c.textContent.trim().startsWith(EXPL)) tr.remove(); });
     art.querySelectorAll('.psec[data-ps="p-ill"], .psec[data-ps="p-memo"]').forEach(x => x.remove());
     const pv = art.querySelector('.psec[data-ps="p-var"]');
     if (pv) pv.insertAdjacentHTML('beforeend', `<h3>Variants proposed by other teams</h3><div class="frpub p${a.ph} noprint"><span>No variant has been published yet. If you adapt this activity, you can propose your adaptation from the Review tab of your space. After proofreading, it can appear here.</span><a class="btn" href="#espace/${a.id}" data-prep="${a.id}">Prepare and modify</a></div>`);
@@ -1884,7 +1889,7 @@ function renderEspace(id) {
     const cnt = (n, t) => `<span class="wkn">${n} of ${t}</span>`;
     const ph = WKPH[a.id] || [], nRg = nDone(a.id + '-rgpd', RGPD.length);
     const nStep = nDone(a.id + '-step', D.steps.length), nPen = nDone(a.id + '-pendant', D.pendant.length), nApr = nDone(a.id + '-apres', D.apres.length);
-    const tabs = [['prep', 'Prepare', st.tot ? st.n + ' of ' + st.tot : ''], ['fiche', 'My sheet', !S.gh ? 'Sign in to modify' : S.copies[a.id].prop ? 'Proposed' : 'Your copy'], ['jour', 'Facilitate', D.steps.length ? nStep + ' of ' + D.steps.length + ' steps' : ''], ['bilan', 'Review', st.k === 'm' ? 'Started' : '']];
+    const tabs = [['prep', 'Prepare', st.tot ? `${st.n} of ${st.tot}` : ''], ['fiche', 'My sheet', !S.gh ? 'Sign in to modify' : S.copies[a.id].prop ? 'Proposed' : 'Your copy'], ['jour', 'Facilitate', D.steps.length ? `${nStep} of ${D.steps.length} steps` : ''], ['bilan', 'Review', st.k === 'm' ? 'Started' : '']];
     const wx = (f, lab) => `<div class="wxr"><small>${lab}</small><div>${Object.keys(WX).map(k => `<button class="wxb ${nt[f] === k ? 'on' : ''}" data-wx="${a.id}:${f}:${k}" aria-pressed="${nt[f] === k}">${wxIcon(k)}<span>${WXL[k]}</span></button>`).join('')}</div></div>`;
     const panes = {
       fiche: S.gh ? sheetPane(a) : sheetLocked(a),
@@ -2121,7 +2126,9 @@ $('wipe').onclick = () => { if (confirm('Delete your workshops, notes, ticked li
 
 document.querySelectorAll('.tabset').forEach(set => { set.querySelector('.pane').innerHTML = TABS[set.querySelector('.tab').dataset.tab]; });
 drawQHome(); ghUI();
-$('varform').onsubmit = e => { e.preventDefault(); const c = S.copies[varId]; c.prop = { at: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }), note: $('var-note').value }; store.set(S); $('vardlg').close(); route0(); };
+document.querySelectorAll('.lang [data-l]').forEach(x => { x.classList.toggle('on', x.dataset.l === LANG); x.onclick = () => { const home = location.protocol === 'file:' ? 'maquette-plateforme-educateurs.html' : 'index.html'; location.href = (x.dataset.l === 'en' ? home : 'lang-' + x.dataset.l + '.html') + location.hash; }; });
+document.querySelector('.lang summary').textContent = LANG.toUpperCase();
+$('varform').onsubmit = e => { e.preventDefault(); const c = S.copies[varId]; c.prop = { at: new Date().toLocaleDateString(LOCALE, { day: 'numeric', month: 'long', year: 'numeric' }), note: $('var-note').value }; store.set(S); $('vardlg').close(); route0(); };
 $('fp-check').innerHTML = ['The account is held by the facilitation team.', 'The minimum age required by the tool has been checked.', 'No personal data is entered.', 'A test question confirms that the system prompt is taken into account.'].map((it, i) => `<li><input type="checkbox" id="fp${i}"><label for="fp${i}"><span>${esc(it)}</span></label></li>`).join('');
 $('copy').onclick = () => { try { navigator.clipboard.writeText($('prompt').textContent); } catch (e) {} $('copy').textContent = 'System prompt copied'; };
 renderSituation($('situation-guide'));
