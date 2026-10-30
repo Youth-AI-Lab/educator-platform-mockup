@@ -1032,14 +1032,14 @@ You give neither medical nor legal advice.</pre>
 
 <footer><div class="wrap">
   <div class="foot">
-    <div><h3>Youth AI Lab · Platform for educational teams</h3><p>Free resources to prepare and run a workshop on AI with young people aged 12 to 25.</p><img src="maquette-assets/eu_co-funded_fr.png" alt="Co-funded by the European Union"></div>
+    <div><h3>Youth AI Lab · Platform for educational teams</h3><p>Free resources to prepare and run a workshop on AI with young people aged 12 to 25.</p><img src="maquette-assets/eu_co-funded_en.png" alt="Co-funded by the European Union"></div>
     <div><h3>The platform</h3><a href="#demarche">Facilitation</a><a href="#activites">Activities</a><a href="#ia">Practical sheets</a><a href="#retours">Field reports</a><a href="#espace">My space</a><a href="mailto:contact@labaixbidouille.com">Contact</a></div>
     <div><h3>The project</h3><a href="https://www.youth-ai-lab.eu/" target="_blank" rel="noopener">Project website</a><a href="https://www.youth-ai-lab.eu/pacmans-france" target="_blank" rel="noopener">In France</a><a href="https://www.youth-ai-lab.eu/gorgs-ia-catalunya" target="_blank" rel="noopener">In Catalonia</a><a href="https://www.youth-ai-lab.eu/digitale-wolven-belgium" target="_blank" rel="noopener">In Belgium</a><a href="https://www.youth-ai-lab.eu/faro-italy" target="_blank" rel="noopener">In Italy</a></div>
   </div>
 
   <span>Content under the Creative Commons BY-SA 4.0 licence. Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Version V0.220 · mock-up · 19 October 2026</div></div>
+<div class="demo"><div class="wrap">Version V0.221 · mock-up · 19 October 2026</div></div>
 <script>
 const PHASES = ['', 'Observation', 'Hypotheses', 'Experimentation', 'Validation', 'Reflection', 'Communication'];
 const THEMES = { gen: 'Generative AI', ml: 'Machine learning', rob: 'Robotics and sensors', eth: 'Ethics and critical thinking' };
@@ -1616,7 +1616,7 @@ let prOpen = [];
 window.addEventListener('beforeprint', () => { prOpen = [...document.querySelectorAll('.view.on .acc details:not([open])')]; prOpen.forEach(d => d.open = true); });
 window.addEventListener('afterprint', () => { prOpen.forEach(d => d.open = false); prOpen = []; });
 const printHead = a => `<div class="printhead"><img src="maquette-assets/youthailab_rounded.png" alt=""><span>Youth AI Lab · Activity sheet · Phase ${a.ph}</span></div>`;
-const printFoot = () => `<div class="printfoot"><img src="maquette-assets/eu_co-funded_fr.png" alt="Co-funded by the European Union"><span>Youth AI Lab resource under the CC BY-SA 4.0 licence. Printed from the platform for educational teams. Co-funded by the European Union.</span></div>`;
+const printFoot = () => `<div class="printfoot"><img src="maquette-assets/eu_co-funded_en.png" alt="Co-funded by the European Union"><span>Youth AI Lab resource under the CC BY-SA 4.0 licence. Printed from the platform for educational teams. Co-funded by the European Union.</span></div>`;
 // Copies personnelles : maquette seulement, la connexion GitHub est simulée et la copie reste dans le navigateur
 let ghWant = null, varId = null;
 function askDup(id) { if (S.gh) return dupAct(id); ghWant = id; $('ghdlg').showModal(); }
