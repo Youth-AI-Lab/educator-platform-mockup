@@ -702,6 +702,7 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
 /* V0.217 : questions sur l'IA, ressources à imprimer, copies personnelles, impression */
 .fpc.c-qa { --fc: var(--yellow); }
 .band.qband { background: var(--blue-soft); }
+.totop { position: fixed; right: 24px; bottom: 24px; z-index: 20; width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--ink); background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, .12); transition: transform .15s; } .totop:hover { transform: translateY(-3px); } .totop[hidden] { display: none; }
 .gaz { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 24px; } .gaz a { display: inline-block; min-width: 30px; padding: 4px 0; text-align: center; border: 1px solid var(--ink); border-radius: 4px; font-weight: 700; } .gaz span { display: inline-block; min-width: 30px; padding: 4px 0; text-align: center; color: #bbb; border: 1px solid #ddd; border-radius: 4px; }
 .gl h2 { margin: 30px 0 4px; font-size: 1.4rem; } .gt { border-bottom: 1px solid var(--ink); padding: 14px 0; scroll-margin-top: 90px; } .gt[hidden], .gl[hidden] { display: none; }
 .gt h3 { margin: 0 0 4px; font-size: 1.05rem; } .gt p { margin: 0 0 6px; } .gt small { display: block; font-size: .88rem; }
@@ -1031,6 +1032,8 @@ No dones consells mèdics ni legals.</pre>
 
 </div></main>
 
+<button class="totop noprint" id="totop" aria-label="Torna a dalt" title="Torna a dalt" hidden><svg viewBox="0 0 24 24" width="27" height="27" aria-hidden="true"><path fill="#1a1a1a" d="M12 2c3.2 2.3 4.9 5.6 4.9 9.6 0 1.2-.2 2.4-.5 3.5l2.4 2.6c.3.3.3.8 0 1.1l-1.9 2.2c-.3.3-.8.3-1.1 0L14 19h-4l-1.8 2c-.3.3-.8.3-1.1 0l-1.9-2.2c-.3-.3-.3-.8 0-1.1l2.4-2.6c-.3-1.1-.5-2.3-.5-3.5C7.1 7.6 8.8 4.3 12 2zm0 6.5a1.9 1.9 0 1 0 0 3.8 1.9 1.9 0 0 0 0-3.8zM10.6 20.2h2.8L12 23z"/></svg></button>
+
 <dialog id="ghdlg" aria-labelledby="ghdlg-t">
   <h3 id="ghdlg-t">Inicia la sessió amb GitHub</h3>
   <p>Recupera els teus tallers en qualsevol dispositiu i obtén la teva pròpia còpia de la fitxa d'activitat per a cada taller, que pots canviar com vulguis. Les teves còpies són privades. El compte és opcional: tota la resta de la plataforma funciona sense compte.</p>
@@ -1056,7 +1059,7 @@ No dones consells mèdics ni legals.</pre>
 
   <span>Contingut sota la llicència Creative Commons BY-SA 4.0. Finançat per la Unió Europea. Tanmateix, les opinions i els punts de vista expressats són exclusivament els de l'autor o autors i no reflecteixen necessàriament els de la Unió Europea.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Versió V0.228 · maqueta · 19 d'octubre de 2026</div></div>
+<div class="demo"><div class="wrap">Versió V0.229 · maqueta · 19 d'octubre de 2026</div></div>
 <script>
 // Langue de cette version du site (voir outils-i18n/)
 const LANG = 'ca', LOCALE = 'ca-ES', EXPL = 'Fase d\'exploració', RES = 'Recurs';
@@ -2161,6 +2164,7 @@ $('wipe').onclick = () => { if (confirm('Vols eliminar els teus tallers, notes, 
 
 document.querySelectorAll('.tabset').forEach(set => { set.querySelector('.pane').innerHTML = TABS[set.querySelector('.tab').dataset.tab]; });
 drawQHome(); ghUI();
+{ const tt = $('totop'); const upd = () => { tt.hidden = window.scrollY < 600; }; window.addEventListener('scroll', upd, { passive: true }); tt.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' }); upd(); }
 document.querySelectorAll('.lang [data-l]').forEach(x => { x.classList.toggle('on', x.dataset.l === LANG); x.onclick = () => { const home = location.protocol === 'file:' ? 'maquette-plateforme-educateurs.html' : 'index.html'; location.href = (x.dataset.l === 'en' ? home : 'lang-' + x.dataset.l + '.html') + location.hash; }; });
 document.querySelector('.lang summary').textContent = LANG.toUpperCase();
 $('varform').onsubmit = e => { e.preventDefault(); const c = S.copies[varId]; c.prop = { at: new Date().toLocaleDateString(LOCALE, { day: 'numeric', month: 'long', year: 'numeric' }), note: $('var-note').value }; store.set(S); $('vardlg').close(); route0(); };
