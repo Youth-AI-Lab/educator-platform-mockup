@@ -1059,7 +1059,7 @@ Je geeft geen medisch of juridisch advies.</pre>
 
   <span>Inhoud onder de licentie Creative Commons BY-SA 4.0. Gefinancierd door de Europese Unie. De geuite standpunten en meningen zijn echter uitsluitend die van de auteur(s) en weerspiegelen niet noodzakelijk die van de Europese Unie.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Versie V0.230 · mock-up · 19 oktober 2026</div></div>
+<div class="demo"><div class="wrap">Versie V0.231 · mock-up · 19 oktober 2026</div></div>
 <script>
 // Langue de cette version du site (voir outils-i18n/)
 const LANG = 'nl', LOCALE = 'nl-BE', EXPL = 'Verkenningsfase', RES = 'Bron';
@@ -1989,12 +1989,54 @@ function renderEspace(id) {
   }).join('') || `<p class="muted espv">Nog geen workshop. Om er een toe te voegen, open je een activiteitenfiche en klik je op "Voorbereiden en aanpassen".</p>`;
 }
 
+// Adresses lisibles : « #activity/wikiyouthbot » plutôt que « #fiche/13 ». Les anciennes adresses restent valables.
+const ASLUG = {"1":"looks-right-is-it-right","2":"bio-inspired-algorithms","3":"designing-an-ai-with-a-robot","4":"ai-detectives","5":"from-data-to-the-machines-brain","6":"keep-an-eye-on-ai","7":"illusion-is-all-that-matters","8":"ai-lab-inside-the-machine","9":"the-bias-bounty-hunt-challenge","10":"the-stupid-invention","11":"make-cities-great-again","12":"bias-genre-matters","13":"wikiyouthbot","14":"hand-signs","15":"from-prototype-to-test","16":"mbot2-navigator","17":"microbit-createai","18":"lyas-village"};
+const GSLUG = ["introduction","the-six-phases","frequently-asked-questions","choosing-a-format","facilitating","managing-the-group","engaging-young-people","adapting-to-your-context","intervention-scenarios","evaluating"];
+const PSLUG = ["understanding-how-a-machine-learns","outsmarting-the-biases-of-generative-ai","linking-ai-to-your-local-area","building-and-testing-a-robot-with-ai","making-ai-fairer-and-more-inclusive"];
+const keyOf = (o, v) => Object.keys(o).find(k => o[k] === v);
+function prettyHash(h) {
+  const [v, a] = h.replace(/^#/, '').split('/'), has = a !== undefined && a !== '';
+  switch (v) {
+    case 'accueil': return has && PSLUG[a] ? 'home/' + PSLUG[a] : 'home';
+    case 'activites': return has && PSLUG[a] ? 'activities/pathways/' + PSLUG[a] : 'activities';
+    case 'fiche': return ASLUG[a] ? 'activity/' + ASLUG[a] : 'activities';
+    case 'demarche': return has && GSLUG[a] ? 'facilitation/' + GSLUG[a] : 'facilitation';
+    case 'ia': return 'practical-sheets';
+    case 'pratique': return 'practical-sheets/system-prompts';
+    case 'qa': return 'practical-sheets/ai-questions' + (has ? '/question-' + (+a + 1) : '');
+    case 'glossaire': return 'practical-sheets/glossary' + (!has ? '' : a.startsWith('l-') ? '/letter-' + a.slice(2).toLowerCase() : '/' + a.slice(2));
+    case 'retours': return 'field-reports';
+    case 'retour': return 'field-reports/' + a;
+    case 'espace': return has && ASLUG[a] ? 'my-space/' + ASLUG[a] : 'my-space';
+  }
+  return h.replace(/^#/, '');
+}
+function internalHash(h) {
+  const p = h.replace(/^#/, '').split('/');
+  switch (p[0]) {
+    case 'home': return 'accueil' + (p[1] && PSLUG.includes(p[1]) ? '/' + PSLUG.indexOf(p[1]) : '');
+    case 'activities': return 'activites' + (p[1] === 'pathways' && PSLUG.includes(p[2]) ? '/' + PSLUG.indexOf(p[2]) : '');
+    case 'activity': return keyOf(ASLUG, p[1]) ? 'fiche/' + keyOf(ASLUG, p[1]) : 'activites';
+    case 'facilitation': return 'demarche' + (GSLUG.includes(p[1]) ? '/' + GSLUG.indexOf(p[1]) : '');
+    case 'practical-sheets':
+      if (p[1] === 'system-prompts') return 'pratique';
+      if (p[1] === 'ai-questions') return 'qa' + (/^question-\d+$/.test(p[2] || '') ? '/' + (+p[2].slice(9) - 1) : '');
+      if (p[1] === 'glossary') return 'glossaire' + (!p[2] ? '' : p[2].startsWith('letter-') ? '/l-' + p[2].slice(7).toUpperCase() : '/g-' + p[2]);
+      return 'ia';
+    case 'field-reports': return p[1] ? 'retour/' + p[1] : 'retours';
+    case 'my-space': return 'espace' + (keyOf(ASLUG, p[1]) ? '/' + keyOf(ASLUG, p[1]) : '');
+  }
+  return p.join('/');
+}
+const prettyLinks = root => root.querySelectorAll('a[href^="#"]').forEach(a => { const h = a.getAttribute('href'), n = '#' + prettyHash(h); if (h.length > 1 && n !== h) a.setAttribute('href', n); });
+new MutationObserver(() => prettyLinks(document)).observe(document.body, { childList: true, subtree: true });
 function route() {
-  const h = (location.hash || '#accueil').slice(1).split('/');
+  const h = internalHash(location.hash || '#accueil').split('/');
   let v = h[0];
   if (!$('v-' + v)) v = 'accueil';
   document.querySelectorAll('.view').forEach(x => x.classList.toggle('on', x.id === 'v-' + v));
   document.querySelectorAll('[data-nav]').forEach(x => x.classList.toggle('on', x.dataset.nav === (v === 'fiche' ? 'activites' : v === 'pratique' || v === 'qa' || v === 'glossaire' ? 'ia' : v === 'retour' ? 'retours' : v)));
+  { const pr = '#' + prettyHash(h.join('/')); if (location.hash && location.hash !== pr) history.replaceState(null, '', pr); }
   if (v === 'accueil' && h[1] && PARCOURS[+h[1]]) { pcur = +h[1]; drawParcours(); }
   if (v === 'activites') { const pn = h[1] !== undefined && h[1] !== '' && PARCOURS[+h[1]] ? +h[1] : null; aTab = pn === null ? 0 : 1; renderCards(); if (pn !== null) { setTimeout(() => { const t = $('path-' + pn); if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 100 }); }, 0); lastV = v; return; } }
   if (v === 'fiche') renderFiche(+h[1]);
