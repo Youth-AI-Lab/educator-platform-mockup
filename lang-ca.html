@@ -702,6 +702,9 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
 /* V0.217 : questions sur l'IA, ressources à imprimer, copies personnelles, impression */
 .fpc.c-qa { --fc: var(--yellow); }
 .band.qband { background: var(--blue-soft); }
+.wsteps li h3 { margin-bottom: 4px; } .wsteps li p { margin: 0 0 6px; } .wlinks { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .92rem; }
+.wguides { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; } .wguides .chk { margin: 0; } .wguides h3 { margin: 0 0 6px; } .wguides p { margin: 0 0 8px; }
+@media (max-width: 900px) { .wguides { grid-template-columns: 1fr; } }
 .totop { position: fixed; right: 26px; bottom: 26px; z-index: 20; padding: 4px; border: 0; background: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .15s; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff); } .totop:hover { transform: translateY(-3px); } .totop[hidden] { display: none; }
 .gaz { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 24px; } .gaz a { display: inline-block; min-width: 30px; padding: 4px 0; text-align: center; border: 1px solid var(--ink); border-radius: 4px; font-weight: 700; } .gaz span { display: inline-block; min-width: 30px; padding: 4px 0; text-align: center; color: #bbb; border: 1px solid #ddd; border-radius: 4px; }
 .gl h2 { margin: 30px 0 4px; font-size: 1.4rem; } .gt { border-bottom: 1px solid var(--ink); padding: 14px 0; scroll-margin-top: 90px; } .gt[hidden], .gl[hidden] { display: none; }
@@ -919,61 +922,60 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
       <a class="gback" href="#ia">← Totes les fitxes pràctiques</a>
       <div class="gpart">En aquesta fitxa</div>
       <button data-sc="fp-comprendre">Entén</button>
-      <button data-sc="fp-outils">Tria una eina</button>
-      <button data-sc="fp-essayer">Prova-ho</button>
-      <button data-sc="fp-composer">Redacta un prompt de sistema</button>
+      <button data-sc="fp-ateliers">Els sis tallers</button>
+      <button data-sc="fp-guides">Sis guies</button>
+      <button data-sc="fp-depart">Per on començar</button>
+      <button data-sc="fp-besoins">Què cal per a una sessió</button>
+      <button data-sc="fp-jeunes">Amb els joves</button>
       <button data-sc="fp-vigilance">Punts d'atenció</button>
-      <button data-sc="fp-exercice">Practica</button>
-      <button data-sc="fp-atelier">En un taller</button>
     </nav>
     <article class="doc">
       <div><span class="tag t-gen">IA generativa</span></div>
-      <h1>Entendre i utilitzar els prompts de sistema</h1>
-      <p class="lead">Un prompt de sistema és un text d'instruccions que es dona a una eina d'IA per orientar-ne les respostes. Pot fixar un rol, un to o unes normes que cal seguir.</p>
-      <div class="chips"><div class="chip"><small>Per a qui</small>L'equip de dinamització, abans d'un taller</div><div class="chip"><small>Eines presentades</small>Claude Projects, Gemini Gems</div></div>
+      <h1>Construeix el teu propi chatbot: què llegeix i qui decideix</h1>
+      <p class="lead">Sis tallers pràctics i sis guies per als equips de dinamització, per veure què passa darrere d'un chatbot abans de fer-ne servir un amb joves.</p>
+      <div class="chips"><div class="chip"><small>Per a qui</small>Equips de dinamització en parelles, sense coneixements de programació</div><div class="chip"><small>Format</small>6 tallers de 2 hores, cadascun independent, al navegador</div></div>
 
       <h2 id="fp-comprendre">Entén</h2>
+      <p>Tots els tallers responen a la mateixa pregunta: què entra en el context del model, quan, i qui ho decideix? El context és tot el que el model llegeix abans de respondre: la pregunta, les seves instruccions i qualsevol document que se li hagi donat.</p>
       <p>La mateixa pregunta, feta a la mateixa IA, no obté la mateixa resposta segons les instruccions que ha rebut abans.</p>
       <div class="demo2">
         <div class="seg"><button class="on" data-demo="0">Sense prompt de sistema</button><button data-demo="1">Amb prompt de sistema</button></div>
         <div id="demo"></div>
       </div>
+      <p>Cada taller afegeix una peça al chatbot de la parella, i després de cada peça es tornen a fer les mateixes preguntes de prova, perquè tothom vegi què ha canviat. L'exemple que segueix tota la sèrie és la prevenció dels incendis forestals, amb un document del teu propi territori.</p>
 
-      <h2 id="fp-outils">Tria una eina</h2>
-      <table class="cmp"><thead><tr><th></th><th>Claude Projects</th><th>Gemini Gems</th></tr></thead><tbody>
-        <tr><td>Cost</td><td>Compte Claude Pro, uns 18 € al mes</td><td>Gratuït en la versió estàndard</td></tr>
-        <tr><td>On s'escriu el prompt de sistema</td><td>Casella «Custom instructions» del projecte</td><td>Camp «Instructions» del Gem</td></tr>
-        <tr><td>Documents de referència</td><td>Casella «Files» del projecte</td><td>Secció «Knowledge» del Gem</td></tr>
-        <tr><td>Compartició</td><td>Amb un enllaç</td><td>Amb un enllaç de Google</td></tr>
+      <h2 id="fp-ateliers">Els sis tallers</h2>
+      <ol class="steps wsteps"><li><h3>Instruccions i coneixement</h3><p><em>Què llegeix el chatbot abans de respondre?</em></p><p>Un joc de preguntes de prova i una regla de puntuació; cinc personalitats de chatbot; el teu propi prompt de sistema.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-preprompt">Repositori i Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/">Diapositives</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/1-instructions-and-knowledge.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/facilitator.html">Fitxa de dinamització</a></p></li><li><h3>Tot en el context, després el RAG</h3><p><em>Qui tria les peces?</em></p><p>Tots els documents de cop, després un motor de cerca que tria fragments (RAG), a Open WebUI; un joc desendollat amb tires de paper.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-rag">Repositori i Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/">Diapositives</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/2-rag.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/facilitator.html">Fitxa de dinamització</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/strips.html">Tires de paper</a></p></li><li><h3>Deixa'l cercar, dona-li saber fer</h3><p><em>I si el model cerqués tot sol?</em></p><p>El model cerca tot sol als fitxers; un document del teu territori entra al coneixement, revisat per una persona; la teva pròpia skill.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-search">Repositori i Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/3/">Diapositives</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/3/3-search.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/3/facilitator.html">Fitxa de dinamització</a></p></li><li><h3>Connectar eines</h3><p><em>Què passa quan el chatbot actua a l'exterior?</em></p><p>Una eina que dona el nivell de perill d'incendi del dia (MCP), amb la seva font oficial, i el que una eina pot fer malament.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-tools">Repositori i Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/4/">Diapositives</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/4/4-tools.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/4/facilitator.html">Fitxa de dinamització</a></p></li><li><h3>Organitzar el que sap</h3><p><em>Com es manté net el coneixement quan creix?</em></p><p>Un wiki que el model manté i que una persona revisa; un graf de coneixement; el chatbot del teu territori, empaquetat per tornar-lo a construir en un altre lloc.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-wiki">Repositori i Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/5/">Diapositives</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/5/5-wiki.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/5/facilitator.html">Fitxa de dinamització</a></p></li><li><h3>Ensenyar un model petit a classificar missatges</h3><p><em>Quan val la pena ensenyar un model petit, en lloc de preguntar-ho a un de gran?</em></p><p>Un model petit multilingüe, ajustat amb els teus propis exemples per classificar els missatges abans del chatbot, i després comparat amb un model de xat generalista.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-finetune">Repositori i Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/6/">Diapositives</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/6/6-finetune.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/6/facilitator.html">Fitxa de dinamització</a></p></li></ol>
+      <p>Tot el que fan servir els cinc primers tallers és en un sol lloc, el kit dels tallers: instal·lació, ordres, problemes habituals, regles de puntuació, com un taller porta al següent. <a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-kit">Kit dels tallers</a> · <a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-kit/blob/main/SETUP.md">Instal·lació</a></p>
+
+      <h2 id="fp-guides">Sis guies, per anar més lluny</h2>
+      <div class="wguides"><div class="chk"><h3>Open WebUI</h3><p>Un chatbot per tema, activitat o projecte, compartit amb un grup durant una sessió; plantilles d'instruccions amb regles per protegir els joves.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-openwebui-guide">Obre la guia</a></p></div><div class="chk"><h3>IA local</h3><p>Un chatbot en un ordinador de la teva organització (Linux, macOS, Windows, Raspberry Pi), perquè les dades no en surtin.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-local-ai-guide">Obre la guia</a></p></div><div class="chk"><h3>OpenCode</h3><p>El teu propi chatbot amb una altra eina de codi obert, i cinc maneres de pagar el model.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-opencode-guide">Obre la guia</a></p></div><div class="chk"><h3>OpenRouter</h3><p>L'altra opció en lloc d'una clau Anthropic: una sola clau, molts models, cap model Claude per defecte, i el que exigeixen la retenció zero de dades i l'allotjament a Europa.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-openrouter-guide">Obre la guia</a></p></div><div class="chk"><h3>Dev containers</h3><p>Els tallers i les guies al teu propi ordinador, sense Codespace.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-devcontainer-guide">Obre la guia</a></p></div><div class="chk"><h3>Hermes</h3><p>Un assistent que recorda, per ajudar els equips de dinamització a preparar les seves sessions. Mai per fer-lo servir amb joves.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-hermes-guide">Obre la guia</a></p></div></div>
+
+      <h2 id="fp-depart">Per on començar</h2>
+      <table class="cmp"><thead><tr><th>Vols…</th><th>Comença per</th></tr></thead><tbody>
+        <tr><td>Portar a terme la sèrie amb equips de dinamització</td><td><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/facilitator.html">La fitxa de dinamització del taller 1</a>, i després <a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-kit/blob/main/SETUP.md">la instal·lació del kit</a></td></tr>
+        <tr><td>Seguir un taller pel teu compte</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-preprompt">El repositori del taller 1</a>: la seva pàgina s'obre al Codespace</td></tr>
+        <tr><td>Treballar sense Codespace</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-devcontainer-guide">La guia de dev containers</a></td></tr>
+        <tr><td>Donar un chatbot a un grup durant una sessió</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-openwebui-guide">La guia d'Open WebUI</a>, o <a class="lk" href="https://github.com/Youth-AI-Lab/yal-local-ai-guide">la guia d'IA local</a> per mantenir les dades a la teva organització</td></tr>
+        <tr><td>Construir un chatbot amb joves</td><td><a class="lk" href="#fiche/13">L'activitat WikiYouthBot</a></td></tr>
+        <tr><td>Entendre què fa un model de llenguatge</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-local-ai-guide/blob/main/how-an-llm-works.md">Com funciona un model de llenguatge</a>: els tokens, la finestra de context i la temperatura, amb imatges</td></tr>
+        <tr><td>Entendre una paraula dels tallers i de les guies</td><td><a class="lk" href="#glossaire">El nostre glossari d'intel·ligència artificial</a></td></tr>
       </tbody></table>
 
-      <h2 id="fp-essayer">Prova-ho</h2>
-      <ol class="steps"><li><h3>Escriu</h3><p>Crea un projecte o un Gem i enganxa-hi el prompt de sistema següent.</p></li><li><h3>Prova</h3><p>Fes una pregunta de la qual se sap la resposta i després una pregunta que no es pot respondre.</p></li><li><h3>Ajusta</h3><p>Canvia una sola norma, torna a fer les mateixes preguntes i compara.</p></li></ol>
-      <pre class="prompt" id="prompt">Ets un assistent que ajuda un grup a explorar un tema.
+      <h2 id="fp-besoins">Què cal per a una sessió</h2>
+      <ul>
+        <li><strong>Un compte de GitHub per parella.</strong> La quota gratuïta d'un compte personal (120 hores de nucli al mes) és suficient per a la sèrie.</li>
+        <li><strong>Una clau d'API per parella</strong>, creada pel dinamitzador: una clau Anthropic, en un sol espai de treball per a la sala amb un límit de despesa, o una clau OpenRouter, amb tota la sala en un mateix model. Cada organització sòcia paga les seves pròpies sessions. A Anvers, amb claus Anthropic, les parelles més avançades van gastar menys de 2 $ en un taller de 2 hores.</li>
+        <li><strong>Un ordinador per parella</strong> amb un navegador recent, i un projector. Els tallers són per a adults: els equips de dinamització ho proven tot ells mateixos abans de qualsevol ús amb joves.</li>
+      </ul>
 
-TO
-Respons en tres frases com a màxim, amb un llenguatge senzill.
-
-NORMES
-Dius «No ho sé» en lloc d'inventar-te una resposta.
-Cites la font quan dones una xifra.
-
-LÍMITS
-No dones consells mèdics ni legals.</pre>
-      <button class="btn small noprint" id="copy">Copia el prompt de sistema</button>
-
-      <h2 id="fp-composer">Redacta un prompt de sistema</h2>
-      <div class="tabset"><div class="tabs" role="tablist"><button class="tab on" data-tab="b1">Norma de comportament</button><button class="tab" data-tab="b2">Requisit de qualitat</button><button class="tab" data-tab="b3">Públic destinatari</button><button class="tab" data-tab="b4">Límit</button></div>
-      <div class="pane"></div></div>
+      <h2 id="fp-jeunes">Amb els joves</h2>
+      <p>A l'activitat <a class="lk" href="#fiche/13">WikiYouthBot</a>, un grup de joves tria una qüestió local, reuneix les fonts reals i converteix una IA generativa en el seu propi expert. La sèrie mostra què hi ha darrere de les dues caselles, Instruccions i Coneixement, de les eines que fan servir.</p>
+      <p><a class="lk" href="https://youth-ai-lab.github.io/wikiyouthbot/">Una setmana real a La Rochelle</a>: els chatbots i els prototips de robots construïts per joves el juliol de 2026, entre els quals <a class="lk" href="https://youth-ai-lab.github.io/wikiyouthbot/france/feurisson/">Feurisson</a>, el chatbot de prevenció d'incendis forestals que va inspirar l'exemple de la sèrie.</p>
 
       <h2 id="fp-vigilance">Punts d'atenció</h2>
       <ul class="check" id="fp-check"></ul>
-
-      <h2 id="fp-exercice">Practica</h2>
-      <div class="quiz" id="situation-guide"></div>
-
-      <h2 id="fp-atelier">En un taller</h2>
-      <p><a href="#fiche/13">WikiYouthBot</a>, <a href="#fiche/9">The Bias Bounty Hunt Challenge</a></p>
+      <p class="muted">Font: <a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/resources.html">la pàgina de recursos de la sèrie «Construeix el teu propi chatbot»</a>.</p>
     </article>
   </div>
 </section>
@@ -1059,7 +1061,7 @@ No dones consells mèdics ni legals.</pre>
 
   <span>Contingut sota la llicència Creative Commons BY-SA 4.0. Finançat per la Unió Europea. Tanmateix, les opinions i els punts de vista expressats són exclusivament els de l'autor o autors i no reflecteixen necessàriament els de la Unió Europea.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Versió V0.231 · maqueta · 19 d'octubre de 2026</div></div>
+<div class="demo"><div class="wrap">Versió V0.232 · maqueta · 19 d'octubre de 2026</div></div>
 <script>
 // Langue de cette version du site (voir outils-i18n/)
 const LANG = 'ca', LOCALE = 'ca-ES', EXPL = 'Fase d\'exploració', RES = 'Recurs';
@@ -1586,7 +1588,7 @@ const FPS = [
   ['qa', 'El nostre glossari d\'intel·ligència artificial', '#glossaire', '90 paraules en un llenguatge senzill'],
   ['choix', 'Triar una eina d\'IA per a un grup de joves'],
   ['choix', 'Gratuït o de pagament: què permet un compte'],
-  ['main', 'Entendre i utilitzar els prompts de sistema', '#pratique', 'Claude Projects, Gemini Gems'],
+  ['main', 'Construeix el teu propi chatbot: què llegeix i qui decideix', '#pratique', '6 tallers, 6 guies'],
   ['main', 'Generar imatges amb un grup'],
   ['main', 'Entrenar un model amb Teachable Machine'],
   ['expl', 'Com aprèn una màquina a partir d\'exemples'],
@@ -1605,7 +1607,7 @@ const QA = [
     ['La IA té biaixos?', 'Sí, en pot tenir. Un model reprodueix els patrons de les seves dades d\'entrenament, inclosos els estereotips i l\'absència de determinats grups. Les persones que el dissenyen també trien per a què s\'optimitza. Provar l\'eina amb exemples variats ajuda a fer visibles aquests biaixos.']]],
   ['Bones pràctiques', [
     ['Com comprovo una resposta d\'IA?', 'Tria un punt precís de la resposta i busca\'l en una font fiable que puguis identificar. Obre les fonts que cita l\'eina, perquè potser no existeixen o no diuen el que afirma.'],
-    ['Com escric una bona petició?', 'Digues què vols, per a qui i en quin format, i afegeix-hi un exemple si en tens. Llegeix la resposta i corregeix la petició. La fitxa pràctica sobre els prompts de sistema hi aprofundeix més.', '#pratique', 'Entendre i utilitzar els prompts de sistema'],
+    ['Com escric una bona petició?', 'Digues què vols, per a qui i en quina forma, i després afegeix-hi un exemple si en tens. Llegeix la resposta i després corregeix la teva petició. Els tallers «Construeix el teu propi chatbot» van més lluny.', '#pratique', 'Construeix el teu propi chatbot'],
     ['Puc utilitzar la IA per preparar els meus tallers?', 'Sí, per trobar idees, adaptar un text o preparar exemples. Comprova el contingut abans d\'utilitzar-lo i prova amb l\'eina tot el que tinguis previst fer amb el grup.'],
     ['He de dir quan una cosa s\'ha fet amb IA?', 'Sí. Dir quina eina s\'ha utilitzat i per a què és un bon hàbit, tant per a l\'equip de dinamització com per als joves. També obre un debat sobre què ha fet la persona i què ha fet la màquina.']]],
   ['Amb els joves', [
@@ -1869,7 +1871,7 @@ function renderAutopos() {
   const vide = !ids.length; if (vide) ids = [5, 2];
   let pick = ids.map(id => ACTS.find(a => a.id === id));
   if (ans.ia === 0) pick = pick.slice().sort((a, b) => NIV[a.n] - NIV[b.n]);
-  const fiche = ans.ia === 0 ? 'Triar una eina d\'IA' : 'Utilitzar prompts de sistema';
+  const fiche = ans.ia === 0 ? 'Triar una eina d\'IA' : 'Construeix el teu propi chatbot';
   const rep = ans.exp === 0 ? [4, 'Dinamitzar un taller'] : [7, 'Adaptar-se al teu context'];
   el.innerHTML = `<h3 class="qh">${vide ? 'Encara no hi ha cap activitat de menys de 2 hores per a aquest grup. De 2 a 3 hores:' : 'Per començar amb el teu grup'}</h3>
     <div class="qres">${pick.map(a => `<a class="p${a.ph}" href="#fiche/${a.id}"><b>${esc(a.t)}</b><span>${esc(a.dc === 'court' ? 'Menys de 2 hores' : a.dc === 'moyen' ? 'De 2 a 3 hores' : 'Diverses sessions')} · ${a.n}</span></a>`).join('')}</div>
@@ -2002,7 +2004,7 @@ function prettyHash(h) {
     case 'fiche': return ASLUG[a] ? 'activity/' + ASLUG[a] : 'activities';
     case 'demarche': return has && GSLUG[a] ? 'facilitation/' + GSLUG[a] : 'facilitation';
     case 'ia': return 'practical-sheets';
-    case 'pratique': return 'practical-sheets/system-prompts';
+    case 'pratique': return 'practical-sheets/build-your-own-chatbot';
     case 'qa': return 'practical-sheets/ai-questions' + (has ? '/question-' + (+a + 1) : '');
     case 'glossaire': return 'practical-sheets/glossary' + (!has ? '' : a.startsWith('l-') ? '/letter-' + a.slice(2).toLowerCase() : '/' + a.slice(2));
     case 'retours': return 'field-reports';
@@ -2019,7 +2021,7 @@ function internalHash(h) {
     case 'activity': return keyOf(ASLUG, p[1]) ? 'fiche/' + keyOf(ASLUG, p[1]) : 'activites';
     case 'facilitation': return 'demarche' + (GSLUG.includes(p[1]) ? '/' + GSLUG.indexOf(p[1]) : '');
     case 'practical-sheets':
-      if (p[1] === 'system-prompts') return 'pratique';
+      if (p[1] === 'build-your-own-chatbot' || p[1] === 'system-prompts') return 'pratique';
       if (p[1] === 'ai-questions') return 'qa' + (/^question-\d+$/.test(p[2] || '') ? '/' + (+p[2].slice(9) - 1) : '');
       if (p[1] === 'glossary') return 'glossaire' + (!p[2] ? '' : p[2].startsWith('letter-') ? '/l-' + p[2].slice(7).toUpperCase() : '/g-' + p[2]);
       return 'ia';
@@ -2211,8 +2213,8 @@ document.querySelectorAll('.lang [data-l]').forEach(x => { x.classList.toggle('o
 document.querySelector('.lang summary').textContent = LANG.toUpperCase();
 $('varform').onsubmit = e => { e.preventDefault(); const c = S.copies[varId]; c.prop = { at: new Date().toLocaleDateString(LOCALE, { day: 'numeric', month: 'long', year: 'numeric' }), note: $('var-note').value }; store.set(S); $('vardlg').close(); route0(); };
 $('fp-check').innerHTML = ['El compte és de l\'equip de dinamització.', 'S\'ha comprovat l\'edat mínima que exigeix l\'eina.', 'No s\'introdueix cap dada personal.', 'Una pregunta de prova confirma que es té en compte el prompt de sistema.'].map((it, i) => `<li><input type="checkbox" id="fp${i}"><label for="fp${i}"><span>${esc(it)}</span></label></li>`).join('');
-$('copy').onclick = () => { try { navigator.clipboard.writeText($('prompt').textContent); } catch (e) {} $('copy').textContent = 'Prompt de sistema copiat'; };
-renderSituation($('situation-guide'));
+if ($('copy')) $('copy').onclick = () => { try { navigator.clipboard.writeText($('prompt').textContent); } catch (e) {} $('copy').textContent = 'Prompt de sistema copiat'; };
+if ($('situation-guide')) renderSituation($('situation-guide'));
 renderAutopos();
 renderDemo(0);
 const PARCOURS = [

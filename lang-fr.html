@@ -702,6 +702,9 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
 /* V0.217 : questions sur l'IA, ressources à imprimer, copies personnelles, impression */
 .fpc.c-qa { --fc: var(--yellow); }
 .band.qband { background: var(--blue-soft); }
+.wsteps li h3 { margin-bottom: 4px; } .wsteps li p { margin: 0 0 6px; } .wlinks { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .92rem; }
+.wguides { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; } .wguides .chk { margin: 0; } .wguides h3 { margin: 0 0 6px; } .wguides p { margin: 0 0 8px; }
+@media (max-width: 900px) { .wguides { grid-template-columns: 1fr; } }
 .totop { position: fixed; right: 26px; bottom: 26px; z-index: 20; padding: 4px; border: 0; background: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .15s; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff); } .totop:hover { transform: translateY(-3px); } .totop[hidden] { display: none; }
 .gaz { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 24px; } .gaz a { display: inline-block; min-width: 30px; padding: 4px 0; text-align: center; border: 1px solid var(--ink); border-radius: 4px; font-weight: 700; } .gaz span { display: inline-block; min-width: 30px; padding: 4px 0; text-align: center; color: #bbb; border: 1px solid #ddd; border-radius: 4px; }
 .gl h2 { margin: 30px 0 4px; font-size: 1.4rem; } .gt { border-bottom: 1px solid var(--ink); padding: 14px 0; scroll-margin-top: 90px; } .gt[hidden], .gl[hidden] { display: none; }
@@ -919,61 +922,60 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
       <a class="gback" href="#ia">← Toutes les fiches pratiques</a>
       <div class="gpart">Dans cette fiche</div>
       <button data-sc="fp-comprendre">Comprendre</button>
-      <button data-sc="fp-outils">Choisir un outil</button>
-      <button data-sc="fp-essayer">Essayer</button>
-      <button data-sc="fp-composer">Composer un prompt système</button>
+      <button data-sc="fp-ateliers">Les six ateliers</button>
+      <button data-sc="fp-guides">Six guides</button>
+      <button data-sc="fp-depart">Par où commencer</button>
+      <button data-sc="fp-besoins">Ce qu'il faut pour une séance</button>
+      <button data-sc="fp-jeunes">Avec les jeunes</button>
       <button data-sc="fp-vigilance">Points de vigilance</button>
-      <button data-sc="fp-exercice">S'exercer</button>
-      <button data-sc="fp-atelier">En atelier</button>
     </nav>
     <article class="doc">
       <div><span class="tag t-gen">IA générative</span></div>
-      <h1>Comprendre et utiliser les prompts système</h1>
-      <p class="lead">Un prompt système est un texte d'instructions donné à un outil d'IA pour guider ses réponses. Il peut préciser un rôle, un ton ou des règles à suivre.</p>
-      <div class="chips"><div class="chip"><small>Pour qui</small>L'équipe d'animation, avant un atelier</div><div class="chip"><small>Outils présentés</small>Claude Projects, Gemini Gems</div></div>
+      <h1>Construire son chatbot : ce qu'il lit, et qui décide</h1>
+      <p class="lead">Six ateliers pratiques et six guides pour les équipes d'animation, pour voir ce qui se passe derrière un chatbot avant d'en utiliser un avec des jeunes.</p>
+      <div class="chips"><div class="chip"><small>Pour qui</small>Les équipes d'animation, en binômes, sans compétence en développement</div><div class="chip"><small>Format</small>6 ateliers de 2 heures, chacun se suffit à lui-même, dans le navigateur</div></div>
 
       <h2 id="fp-comprendre">Comprendre</h2>
+      <p>Tous les ateliers répondent à la même question : qu'est-ce qui entre dans le contexte du modèle, à quel moment, et qui en décide ? Le contexte, c'est tout ce que le modèle lit avant de répondre : la question, ses instructions et tout document qu'on lui a fourni.</p>
       <p>La même question, posée à la même IA, ne reçoit pas la même réponse selon les instructions qu'elle a reçues en amont.</p>
       <div class="demo2">
         <div class="seg"><button class="on" data-demo="0">Sans prompt système</button><button data-demo="1">Avec prompt système</button></div>
         <div id="demo"></div>
       </div>
+      <p>Chaque atelier ajoute une pièce au chatbot du binôme, et les mêmes questions de test sont reposées après chaque pièce, pour que chacun voie ce qui a changé. L'exemple suivi tout au long de la série est la prévention des feux de forêt, avec un document de votre propre territoire.</p>
 
-      <h2 id="fp-outils">Choisir un outil</h2>
-      <table class="cmp"><thead><tr><th></th><th>Claude Projects</th><th>Gemini Gems</th></tr></thead><tbody>
-        <tr><td>Coût</td><td>Compte Claude Pro, environ 18 € par mois</td><td>Gratuit dans sa version standard</td></tr>
-        <tr><td>Où s'écrit le prompt système</td><td>Encadré « Instructions personnalisées » du projet</td><td>Champ « Instructions » du Gem</td></tr>
-        <tr><td>Documents de référence</td><td>Encadré « Fichier » du projet</td><td>Section « Connaissances » du Gem</td></tr>
-        <tr><td>Partage</td><td>Par un lien</td><td>Par un lien Google</td></tr>
+      <h2 id="fp-ateliers">Les six ateliers</h2>
+      <ol class="steps wsteps"><li><h3>Instructions et connaissances</h3><p><em>Que lit le chatbot avant de répondre ?</em></p><p>Un jeu de questions de test et une règle de notation ; cinq personnalités de chatbot ; votre propre prompt système.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-preprompt">Dépôt et Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/">Diaporama</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/1-instructions-and-knowledge.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/facilitator.html">Fiche d'animation</a></p></li><li><h3>Tout dans le contexte, puis le RAG</h3><p><em>Qui choisit les morceaux ?</em></p><p>Tous les documents d'un coup, puis un moteur de recherche qui choisit des extraits (RAG), dans Open WebUI ; un jeu débranché avec des bandes de papier.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-rag">Dépôt et Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/">Diaporama</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/2-rag.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/facilitator.html">Fiche d'animation</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/strips.html">Bandes de papier</a></p></li><li><h3>Le laisser chercher, lui donner un savoir-faire</h3><p><em>Et si le modèle cherchait lui-même ?</em></p><p>Le modèle cherche lui-même dans les fichiers ; un document de votre territoire entre dans les connaissances, vérifié par une personne ; votre propre skill.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-search">Dépôt et Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/3/">Diaporama</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/3/3-search.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/3/facilitator.html">Fiche d'animation</a></p></li><li><h3>Brancher des outils</h3><p><em>Que se passe-t-il quand le chatbot agit à l'extérieur ?</em></p><p>Un outil qui donne le niveau de danger d'incendie du jour (MCP), avec sa source officielle, et ce qu'un outil peut mal faire.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-tools">Dépôt et Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/4/">Diaporama</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/4/4-tools.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/4/facilitator.html">Fiche d'animation</a></p></li><li><h3>Organiser ce qu'il sait</h3><p><em>Comment garder des connaissances propres quand elles grandissent ?</em></p><p>Un wiki que le modèle tient à jour et qu'une personne vérifie ; un graphe de connaissances ; le chatbot de votre territoire, empaqueté pour être reconstruit ailleurs.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-wiki">Dépôt et Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/5/">Diaporama</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/5/5-wiki.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/5/facilitator.html">Fiche d'animation</a></p></li><li><h3>Apprendre à un petit modèle à trier des messages</h3><p><em>Quand vaut-il la peine d'entraîner un petit modèle plutôt que d'interroger un grand ?</em></p><p>Un petit modèle multilingue, affiné sur vos propres exemples pour trier les messages avant le chatbot, puis comparé à un modèle de conversation généraliste.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-finetune">Dépôt et Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/6/">Diaporama</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/6/6-finetune.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/6/facilitator.html">Fiche d'animation</a></p></li></ol>
+      <p>Tout ce qu'utilisent les cinq premiers ateliers est réuni au même endroit, le kit des ateliers : installation, commandes, problèmes fréquents, règles de notation, enchaînement d'un atelier au suivant. <a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-kit">Kit des ateliers</a> · <a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-kit/blob/main/SETUP.md">Installation</a></p>
+
+      <h2 id="fp-guides">Six guides, pour aller plus loin</h2>
+      <div class="wguides"><div class="chk"><h3>Open WebUI</h3><p>Un chatbot par thème, activité ou projet, partagé avec un groupe pendant une séance ; des modèles d'instructions avec des règles pour protéger les jeunes.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-openwebui-guide">Ouvrir le guide</a></p></div><div class="chk"><h3>IA locale</h3><p>Un chatbot sur un ordinateur de votre structure (Linux, macOS, Windows, Raspberry Pi), pour que les données n'en sortent pas.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-local-ai-guide">Ouvrir le guide</a></p></div><div class="chk"><h3>OpenCode</h3><p>Votre propre chatbot avec un autre outil open source, et cinq façons de payer le modèle.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-opencode-guide">Ouvrir le guide</a></p></div><div class="chk"><h3>OpenRouter</h3><p>L'autre option qu'une clé Anthropic : une seule clé, de nombreux modèles, aucun modèle Claude par défaut, et ce qu'exigent la conservation zéro des données et l'hébergement en Europe.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-openrouter-guide">Ouvrir le guide</a></p></div><div class="chk"><h3>Dev containers</h3><p>Les ateliers et les guides sur votre propre ordinateur, sans Codespace.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-devcontainer-guide">Ouvrir le guide</a></p></div><div class="chk"><h3>Hermes</h3><p>Un assistant qui garde la mémoire, pour aider les équipes d'animation à préparer leurs séances. Jamais pour un usage avec des jeunes.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-hermes-guide">Ouvrir le guide</a></p></div></div>
+
+      <h2 id="fp-depart">Par où commencer</h2>
+      <table class="cmp"><thead><tr><th>Vous voulez…</th><th>Commencez par</th></tr></thead><tbody>
+        <tr><td>Mener la série avec des équipes d'animation</td><td><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/facilitator.html">La fiche d'animation de l'atelier 1</a>, puis <a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-kit/blob/main/SETUP.md">l'installation du kit</a></td></tr>
+        <tr><td>Suivre un atelier en autonomie</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-preprompt">Le dépôt de l'atelier 1</a> : sa page s'ouvre dans le Codespace</td></tr>
+        <tr><td>Travailler sans Codespace</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-devcontainer-guide">Le guide des dev containers</a></td></tr>
+        <tr><td>Donner un chatbot à un groupe pendant une séance</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-openwebui-guide">Le guide Open WebUI</a>, ou <a class="lk" href="https://github.com/Youth-AI-Lab/yal-local-ai-guide">le guide de l'IA locale</a> pour garder les données dans votre structure</td></tr>
+        <tr><td>Construire un chatbot avec des jeunes</td><td><a class="lk" href="#fiche/13">L'activité WikiYouthBot</a></td></tr>
+        <tr><td>Comprendre ce que fait un modèle de langage</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-local-ai-guide/blob/main/how-an-llm-works.md">Comment fonctionne un modèle de langage</a> : les tokens, la fenêtre de contexte et la température, en images</td></tr>
+        <tr><td>Comprendre un mot des ateliers et des guides</td><td><a class="lk" href="#glossaire">Notre glossaire de l'intelligence artificielle</a></td></tr>
       </tbody></table>
 
-      <h2 id="fp-essayer">Essayer</h2>
-      <ol class="steps"><li><h3>Écrire</h3><p>Créez un projet ou un Gem, et collez-y le prompt système ci-dessous.</p></li><li><h3>Tester</h3><p>Posez une question dont la réponse est connue, puis une question sans réponse possible.</p></li><li><h3>Ajuster</h3><p>Modifiez une seule règle, reposez les mêmes questions et comparez.</p></li></ol>
-      <pre class="prompt" id="prompt">Tu es un assistant qui aide un groupe à explorer un sujet.
+      <h2 id="fp-besoins">Ce qu'il faut pour une séance</h2>
+      <ul>
+        <li><strong>Un compte GitHub par binôme.</strong> Le quota gratuit d'un compte personnel (120 heures-cœur par mois) suffit pour la série.</li>
+        <li><strong>Une clé d'API par binôme</strong>, créée par l'animateur : une clé Anthropic, dans un espace de travail commun à la salle avec une limite de dépenses, ou une clé OpenRouter, avec toute la salle sur un même modèle. Chaque organisation partenaire paie ses propres séances. À Anvers, avec des clés Anthropic, les binômes les plus avancés ont dépensé moins de 2 $ en un atelier de 2 heures.</li>
+        <li><strong>Un ordinateur par binôme</strong> avec un navigateur récent, et un vidéoprojecteur. Les ateliers s'adressent aux adultes : les équipes d'animation essaient tout elles-mêmes avant tout usage avec des jeunes.</li>
+      </ul>
 
-TON
-Tu réponds en trois phrases au plus, dans un langage simple.
-
-RÈGLES
-Tu dis « je ne sais pas » plutôt que d'inventer une réponse.
-Tu cites ta source quand tu donnes un chiffre.
-
-LIMITES
-Tu ne donnes ni conseil médical ni conseil juridique.</pre>
-      <button class="btn small noprint" id="copy">Copier le prompt système</button>
-
-      <h2 id="fp-composer">Composer un prompt système</h2>
-      <div class="tabset"><div class="tabs" role="tablist"><button class="tab on" data-tab="b1">Règle de comportement</button><button class="tab" data-tab="b2">Exigence de qualité</button><button class="tab" data-tab="b3">Public visé</button><button class="tab" data-tab="b4">Limite</button></div>
-      <div class="pane"></div></div>
+      <h2 id="fp-jeunes">Avec les jeunes</h2>
+      <p>Dans l'activité <a class="lk" href="#fiche/13">WikiYouthBot</a>, un groupe de jeunes choisit un enjeu local, rassemble les vraies sources et fait d'une IA générative son propre expert. La série montre ce qu'il y a derrière les deux cases, Instructions et Connaissances, des outils qu'ils utilisent.</p>
+      <p><a class="lk" href="https://youth-ai-lab.github.io/wikiyouthbot/">Une vraie semaine à La Rochelle</a> : les chatbots et les prototypes de robots construits par des jeunes en juillet 2026, parmi lesquels <a class="lk" href="https://youth-ai-lab.github.io/wikiyouthbot/france/feurisson/">Feurisson</a>, le chatbot de prévention des feux de forêt qui a inspiré l'exemple suivi dans la série.</p>
 
       <h2 id="fp-vigilance">Points de vigilance</h2>
       <ul class="check" id="fp-check"></ul>
-
-      <h2 id="fp-exercice">S'exercer</h2>
-      <div class="quiz" id="situation-guide"></div>
-
-      <h2 id="fp-atelier">En atelier</h2>
-      <p><a href="#fiche/13">WikiYouthBot</a>, <a href="#fiche/9">The Bias Bounty Hunt Challenge</a></p>
+      <p class="muted">Source : <a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/resources.html">la page des ressources de la série « Construire son chatbot »</a>.</p>
     </article>
   </div>
 </section>
@@ -1059,7 +1061,7 @@ Tu ne donnes ni conseil médical ni conseil juridique.</pre>
 
   <span>Contenus sous licence Creative Commons BY-SA 4.0. Financé par l'Union européenne. Les points de vue et avis exprimés n'engagent toutefois que leurs auteurs et ne reflètent pas nécessairement ceux de l'Union européenne.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Version V0.231 · maquette · 19 octobre 2026</div></div>
+<div class="demo"><div class="wrap">Version V0.232 · maquette · 19 octobre 2026</div></div>
 <script>
 // Langue de cette version du site (voir outils-i18n/)
 const LANG = 'fr', LOCALE = 'fr-FR', EXPL = 'Phase d\'exploration', RES = 'Ressource';
@@ -1586,7 +1588,7 @@ const FPS = [
   ['qa', 'Notre glossaire de l\'intelligence artificielle', '#glossaire', '90 mots en langage simple'],
   ['choix', 'Choisir un outil d\'IA pour un groupe de jeunes'],
   ['choix', 'Gratuit ou payant : ce que permet un compte'],
-  ['main', 'Comprendre et utiliser les prompts système', '#pratique', 'Claude Projects, Gemini Gems'],
+  ['main', 'Construire son chatbot : ce qu\'il lit, et qui décide', '#pratique', '6 ateliers, 6 guides'],
   ['main', 'Générer des images avec un groupe'],
   ['main', 'Entraîner un modèle avec Teachable Machine'],
   ['expl', 'Comment une machine apprend à partir d\'exemples'],
@@ -1605,7 +1607,7 @@ const QA = [
     ['L\'IA est-elle biaisée ?', 'Oui, elle peut l\'être. Un modèle reproduit les régularités de ses données d\'entraînement, y compris les stéréotypes et l\'absence de certains groupes. Les personnes qui le conçoivent choisissent aussi ce pour quoi il est optimisé. Tester l\'outil avec des exemples variés aide à mettre ces biais en lumière.']]],
   ['Bonnes pratiques', [
     ['Comment vérifier une réponse d\'IA ?', 'Choisissez un point précis de la réponse, puis cherchez-le dans une source fiable que vous pouvez identifier. Ouvrez les sources citées par l\'outil, car elles peuvent ne pas exister ou ne pas dire ce qu\'il prétend.'],
-    ['Comment rédiger une bonne demande ?', 'Dites ce que vous voulez, pour qui et sous quelle forme, puis ajoutez un exemple si vous en avez un. Lisez la réponse, puis corrigez votre demande. La fiche pratique sur les prompts système va plus loin.', '#pratique', 'Comprendre et utiliser les prompts système'],
+    ['Comment rédiger une bonne demande ?', 'Dites ce que vous voulez, pour qui et sous quelle forme, puis ajoutez un exemple si vous en avez un. Lisez la réponse, puis corrigez votre demande. Les ateliers « Construire son chatbot » vont plus loin.', '#pratique', 'Construire son chatbot'],
     ['Puis-je utiliser l\'IA pour préparer mes ateliers ?', 'Oui, pour trouver des idées, adapter un texte ou préparer des exemples. Vérifiez les contenus avant de les utiliser, et essayez avec l\'outil tout ce que vous prévoyez de faire avec le groupe.'],
     ['Faut-il dire qu\'un contenu a été fait avec l\'IA ?', 'Oui. Dire quel outil a été utilisé et pour quoi est une bonne habitude, pour l\'équipe d\'animation comme pour les jeunes. Cela ouvre aussi une discussion sur ce qu\'a fait la personne et ce qu\'a fait la machine.']]],
   ['Avec les jeunes', [
@@ -1869,7 +1871,7 @@ function renderAutopos() {
   const vide = !ids.length; if (vide) ids = [5, 2];
   let pick = ids.map(id => ACTS.find(a => a.id === id));
   if (ans.ia === 0) pick = pick.slice().sort((a, b) => NIV[a.n] - NIV[b.n]);
-  const fiche = ans.ia === 0 ? 'Choisir un outil d\'IA' : 'Utiliser les prompts système';
+  const fiche = ans.ia === 0 ? 'Choisir un outil d\'IA' : 'Construire son chatbot';
   const rep = ans.exp === 0 ? [4, 'Animer un atelier'] : [7, 'Adapter à son contexte'];
   el.innerHTML = `<h3 class="qh">${vide ? 'Pas encore d\'activité de moins de 2 heures pour ce groupe. En 2 à 3 heures :' : 'Pour démarrer avec votre groupe'}</h3>
     <div class="qres">${pick.map(a => `<a class="p${a.ph}" href="#fiche/${a.id}"><b>${esc(a.t)}</b><span>${esc(a.dc === 'court' ? 'Moins de 2 heures' : a.dc === 'moyen' ? '2 à 3 heures' : 'Plusieurs séances')} · ${a.n}</span></a>`).join('')}</div>
@@ -2002,7 +2004,7 @@ function prettyHash(h) {
     case 'fiche': return ASLUG[a] ? 'activity/' + ASLUG[a] : 'activities';
     case 'demarche': return has && GSLUG[a] ? 'facilitation/' + GSLUG[a] : 'facilitation';
     case 'ia': return 'practical-sheets';
-    case 'pratique': return 'practical-sheets/system-prompts';
+    case 'pratique': return 'practical-sheets/build-your-own-chatbot';
     case 'qa': return 'practical-sheets/ai-questions' + (has ? '/question-' + (+a + 1) : '');
     case 'glossaire': return 'practical-sheets/glossary' + (!has ? '' : a.startsWith('l-') ? '/letter-' + a.slice(2).toLowerCase() : '/' + a.slice(2));
     case 'retours': return 'field-reports';
@@ -2019,7 +2021,7 @@ function internalHash(h) {
     case 'activity': return keyOf(ASLUG, p[1]) ? 'fiche/' + keyOf(ASLUG, p[1]) : 'activites';
     case 'facilitation': return 'demarche' + (GSLUG.includes(p[1]) ? '/' + GSLUG.indexOf(p[1]) : '');
     case 'practical-sheets':
-      if (p[1] === 'system-prompts') return 'pratique';
+      if (p[1] === 'build-your-own-chatbot' || p[1] === 'system-prompts') return 'pratique';
       if (p[1] === 'ai-questions') return 'qa' + (/^question-\d+$/.test(p[2] || '') ? '/' + (+p[2].slice(9) - 1) : '');
       if (p[1] === 'glossary') return 'glossaire' + (!p[2] ? '' : p[2].startsWith('letter-') ? '/l-' + p[2].slice(7).toUpperCase() : '/g-' + p[2]);
       return 'ia';
@@ -2211,8 +2213,8 @@ document.querySelectorAll('.lang [data-l]').forEach(x => { x.classList.toggle('o
 document.querySelector('.lang summary').textContent = LANG.toUpperCase();
 $('varform').onsubmit = e => { e.preventDefault(); const c = S.copies[varId]; c.prop = { at: new Date().toLocaleDateString(LOCALE, { day: 'numeric', month: 'long', year: 'numeric' }), note: $('var-note').value }; store.set(S); $('vardlg').close(); route0(); };
 $('fp-check').innerHTML = ['Le compte est détenu par l\'équipe d\'animation.', 'L\'âge minimum exigé par l\'outil a été vérifié.', 'Aucune donnée personnelle n\'est saisie.', 'Une question de test confirme que le prompt système est pris en compte.'].map((it, i) => `<li><input type="checkbox" id="fp${i}"><label for="fp${i}"><span>${esc(it)}</span></label></li>`).join('');
-$('copy').onclick = () => { try { navigator.clipboard.writeText($('prompt').textContent); } catch (e) {} $('copy').textContent = 'Prompt système copié'; };
-renderSituation($('situation-guide'));
+if ($('copy')) $('copy').onclick = () => { try { navigator.clipboard.writeText($('prompt').textContent); } catch (e) {} $('copy').textContent = 'Prompt système copié'; };
+if ($('situation-guide')) renderSituation($('situation-guide'));
 renderAutopos();
 renderDemo(0);
 const PARCOURS = [

@@ -702,6 +702,9 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
 /* V0.217 : questions sur l'IA, ressources à imprimer, copies personnelles, impression */
 .fpc.c-qa { --fc: var(--yellow); }
 .band.qband { background: var(--blue-soft); }
+.wsteps li h3 { margin-bottom: 4px; } .wsteps li p { margin: 0 0 6px; } .wlinks { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .92rem; }
+.wguides { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; } .wguides .chk { margin: 0; } .wguides h3 { margin: 0 0 6px; } .wguides p { margin: 0 0 8px; }
+@media (max-width: 900px) { .wguides { grid-template-columns: 1fr; } }
 .totop { position: fixed; right: 26px; bottom: 26px; z-index: 20; padding: 4px; border: 0; background: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .15s; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff); } .totop:hover { transform: translateY(-3px); } .totop[hidden] { display: none; }
 .gaz { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 24px; } .gaz a { display: inline-block; min-width: 30px; padding: 4px 0; text-align: center; border: 1px solid var(--ink); border-radius: 4px; font-weight: 700; } .gaz span { display: inline-block; min-width: 30px; padding: 4px 0; text-align: center; color: #bbb; border: 1px solid #ddd; border-radius: 4px; }
 .gl h2 { margin: 30px 0 4px; font-size: 1.4rem; } .gt { border-bottom: 1px solid var(--ink); padding: 14px 0; scroll-margin-top: 90px; } .gt[hidden], .gl[hidden] { display: none; }
@@ -919,61 +922,60 @@ footer { border-top: 1px solid var(--ink); padding: 48px 0 26px; font-size: .9re
       <a class="gback" href="#ia">← Alle praktische fiches</a>
       <div class="gpart">In deze fiche</div>
       <button data-sc="fp-comprendre">Begrijpen</button>
-      <button data-sc="fp-outils">Een tool kiezen</button>
-      <button data-sc="fp-essayer">Uitproberen</button>
-      <button data-sc="fp-composer">Een systeemprompt opstellen</button>
+      <button data-sc="fp-ateliers">De zes workshops</button>
+      <button data-sc="fp-guides">Zes gidsen</button>
+      <button data-sc="fp-depart">Waar beginnen</button>
+      <button data-sc="fp-besoins">Wat een sessie nodig heeft</button>
+      <button data-sc="fp-jeunes">Met jongeren</button>
       <button data-sc="fp-vigilance">Aandachtspunten</button>
-      <button data-sc="fp-exercice">Oefenen</button>
-      <button data-sc="fp-atelier">In een workshop</button>
     </nav>
     <article class="doc">
       <div><span class="tag t-gen">Generatieve AI</span></div>
-      <h1>Systeemprompts begrijpen en gebruiken</h1>
-      <p class="lead">Een systeemprompt is een tekst met instructies die aan een AI-tool wordt gegeven om zijn antwoorden te sturen. Hij kan een rol, een toon of regels vastleggen.</p>
-      <div class="chips"><div class="chip"><small>Voor wie</small>Het begeleidingsteam, voor een workshop</div><div class="chip"><small>Besproken tools</small>Claude Projects, Gemini Gems</div></div>
+      <h1>Bouw je eigen chatbot: wat hij leest en wie beslist</h1>
+      <p class="lead">Zes praktische workshops en zes gidsen voor begeleidingsteams, om te zien wat er achter een chatbot gebeurt voordat je er een met jongeren gebruikt.</p>
+      <div class="chips"><div class="chip"><small>Voor wie</small>Begeleidingsteams in duo's, zonder programmeerkennis</div><div class="chip"><small>Formaat</small>6 workshops van 2 uur, elk op zichzelf staand, in de browser</div></div>
 
       <h2 id="fp-comprendre">Begrijpen</h2>
+      <p>Alle workshops beantwoorden dezelfde vraag: wat komt er in de context van het model, wanneer, en wie beslist dat? De context is alles wat het model leest voordat het antwoordt: de vraag, zijn instructies en elk document dat het gekregen heeft.</p>
       <p>Dezelfde vraag, gesteld aan dezelfde AI, krijgt niet hetzelfde antwoord, afhankelijk van de instructies die de AI vooraf heeft gekregen.</p>
       <div class="demo2">
         <div class="seg"><button class="on" data-demo="0">Zonder systeemprompt</button><button data-demo="1">Met een systeemprompt</button></div>
         <div id="demo"></div>
       </div>
+      <p>Elke workshop voegt een onderdeel toe aan de chatbot van het duo, en na elk onderdeel worden dezelfde testvragen opnieuw gesteld, zodat iedereen ziet wat er veranderd is. Het doorlopende voorbeeld is de preventie van bosbranden, met een document over je eigen regio.</p>
 
-      <h2 id="fp-outils">Een tool kiezen</h2>
-      <table class="cmp"><thead><tr><th></th><th>Claude Projects</th><th>Gemini Gems</th></tr></thead><tbody>
-        <tr><td>Kostprijs</td><td>Claude Pro-account, ongeveer 18 euro per maand</td><td>Gratis in de standaardversie</td></tr>
-        <tr><td>Waar de systeemprompt wordt geschreven</td><td>Vak "Custom instructions" van het project</td><td>Veld "Instructions" van de Gem</td></tr>
-        <tr><td>Referentiedocumenten</td><td>Vak "Files" van het project</td><td>Rubriek "Knowledge" van de Gem</td></tr>
-        <tr><td>Delen</td><td>Via een link</td><td>Via een Google-link</td></tr>
+      <h2 id="fp-ateliers">De zes workshops</h2>
+      <ol class="steps wsteps"><li><h3>Instructies en kennis</h3><p><em>Wat leest de chatbot voordat hij antwoordt?</em></p><p>Een reeks testvragen en een scoreregel; vijf chatbotpersoonlijkheden; je eigen systeemprompt.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-preprompt">Repository en Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/">Slides</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/1-instructions-and-knowledge.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/facilitator.html">Begeleidersfiche</a></p></li><li><h3>Alles in de context, daarna RAG</h3><p><em>Wie kiest de stukken?</em></p><p>Alle documenten tegelijk, daarna een zoekmachine die fragmenten kiest (RAG), in Open WebUI; een unplugged spel met papierstroken.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-rag">Repository en Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/">Slides</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/2-rag.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/facilitator.html">Begeleidersfiche</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/2/strips.html">Papierstroken</a></p></li><li><h3>Laat hem zoeken, geef hem knowhow</h3><p><em>Wat als het model zelf zocht?</em></p><p>Het model zoekt zelf in de bestanden; een document over je regio komt in de kennis terecht, nagekeken door een persoon; je eigen skill.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-search">Repository en Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/3/">Slides</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/3/3-search.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/3/facilitator.html">Begeleidersfiche</a></p></li><li><h3>Tools aansluiten</h3><p><em>Wat gebeurt er als de chatbot naar buiten toe handelt?</em></p><p>Een tool die het brandgevaarniveau van de dag geeft (MCP), met de officiële bron, en wat een tool verkeerd kan doen.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-tools">Repository en Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/4/">Slides</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/4/4-tools.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/4/facilitator.html">Begeleidersfiche</a></p></li><li><h3>Ordenen wat hij weet</h3><p><em>Hoe hou je kennis zuiver als ze groeit?</em></p><p>Een wiki die het model bijhoudt en een persoon nakijkt; een kennisgraaf; de chatbot van je regio, verpakt om elders opnieuw op te bouwen.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-wiki">Repository en Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/5/">Slides</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/5/5-wiki.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/5/facilitator.html">Begeleidersfiche</a></p></li><li><h3>Een klein model leren berichten te sorteren</h3><p><em>Wanneer loont het om een klein model iets aan te leren, in plaats van een groot model te bevragen?</em></p><p>Een klein meertalig model, gefinetuned op je eigen voorbeelden om de berichten te sorteren vóór de chatbot, en daarna vergeleken met een algemeen chatmodel.</p><p class="wlinks"><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-finetune">Repository en Codespace</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/6/">Slides</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/6/6-finetune.pdf">PDF</a><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/6/facilitator.html">Begeleidersfiche</a></p></li></ol>
+      <p>Alles wat de eerste vijf workshops gebruiken, staat op één plek, de workshopkit: installatie, commando's, veelvoorkomende problemen, scoreregels, hoe de ene workshop naar de volgende leidt. <a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-kit">Workshopkit</a> · <a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-kit/blob/main/SETUP.md">Installatie</a></p>
+
+      <h2 id="fp-guides">Zes gidsen, om verder te gaan</h2>
+      <div class="wguides"><div class="chk"><h3>Open WebUI</h3><p>Eén chatbot per thema, activiteit of project, gedeeld met een groep tijdens een sessie; sjablonen voor instructies met regels om jongeren te beschermen.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-openwebui-guide">De gids openen</a></p></div><div class="chk"><h3>Lokale AI</h3><p>Een chatbot op een computer van je organisatie (Linux, macOS, Windows, Raspberry Pi), zodat de gegevens die niet verlaten.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-local-ai-guide">De gids openen</a></p></div><div class="chk"><h3>OpenCode</h3><p>Je eigen chatbot met een andere opensourcetool, en vijf manieren om het model te betalen.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-opencode-guide">De gids openen</a></p></div><div class="chk"><h3>OpenRouter</h3><p>Het alternatief voor een Anthropic-sleutel: één sleutel, veel modellen, standaard geen Claude-model, en wat zero data retention en hosting in Europa vragen.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-openrouter-guide">De gids openen</a></p></div><div class="chk"><h3>Dev containers</h3><p>De workshops en de gidsen op je eigen computer, zonder Codespace.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-devcontainer-guide">De gids openen</a></p></div><div class="chk"><h3>Hermes</h3><p>Een assistent die onthoudt, om begeleidingsteams te helpen hun sessies voor te bereiden. Nooit voor gebruik met jongeren.</p><p><a class="lk" href="https://github.com/Youth-AI-Lab/yal-hermes-guide">De gids openen</a></p></div></div>
+
+      <h2 id="fp-depart">Waar beginnen</h2>
+      <table class="cmp"><thead><tr><th>Je wilt…</th><th>Begin met</th></tr></thead><tbody>
+        <tr><td>De reeks geven aan begeleidingsteams</td><td><a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/1/facilitator.html">De begeleidersfiche van workshop 1</a>, daarna <a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-kit/blob/main/SETUP.md">de installatie van de kit</a></td></tr>
+        <tr><td>Een workshop op eigen houtje volgen</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-workshop-preprompt">De repository van workshop 1</a>: de pagina ervan opent in de Codespace</td></tr>
+        <tr><td>Werken zonder Codespace</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-devcontainer-guide">De gids over dev containers</a></td></tr>
+        <tr><td>Een groep tijdens een sessie een chatbot geven</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-openwebui-guide">De Open WebUI-gids</a>, of <a class="lk" href="https://github.com/Youth-AI-Lab/yal-local-ai-guide">de gids over lokale AI</a> om de gegevens binnen je organisatie te houden</td></tr>
+        <tr><td>Een chatbot bouwen met jongeren</td><td><a class="lk" href="#fiche/13">De activiteit WikiYouthBot</a></td></tr>
+        <tr><td>Begrijpen wat een taalmodel doet</td><td><a class="lk" href="https://github.com/Youth-AI-Lab/yal-local-ai-guide/blob/main/how-an-llm-works.md">Hoe een taalmodel werkt</a>: tokens, het contextvenster en de temperatuur, met afbeeldingen</td></tr>
+        <tr><td>Een woord uit de workshops en de gidsen begrijpen</td><td><a class="lk" href="#glossaire">Onze woordenlijst over artificiële intelligentie</a></td></tr>
       </tbody></table>
 
-      <h2 id="fp-essayer">Uitproberen</h2>
-      <ol class="steps"><li><h3>Schrijven</h3><p>Maak een project of een Gem aan en plak daarin de systeemprompt hieronder.</p></li><li><h3>Testen</h3><p>Stel een vraag waarvan het antwoord bekend is, en daarna een vraag die niet te beantwoorden valt.</p></li><li><h3>Bijstellen</h3><p>Verander één enkele regel, stel dezelfde vragen opnieuw en vergelijk.</p></li></ol>
-      <pre class="prompt" id="prompt">Je bent een assistent die een groep helpt een onderwerp te verkennen.
+      <h2 id="fp-besoins">Wat een sessie nodig heeft</h2>
+      <ul>
+        <li><strong>Eén GitHub-account per duo.</strong> Het gratis quotum van een persoonlijk account (120 core-uren per maand) volstaat voor de reeks.</li>
+        <li><strong>Eén API-sleutel per duo</strong>, aangemaakt door de begeleider: een Anthropic-sleutel, in één workspace voor de zaal met een uitgavenlimiet, of een OpenRouter-sleutel, met de hele zaal op één model. Elke partnerorganisatie betaalt haar eigen sessies. In Antwerpen gebruikten de meest gevorderde duo's met Anthropic-sleutels minder dan $ 2 in een workshop van 2 uur.</li>
+        <li><strong>Eén computer per duo</strong> met een recente browser, en een projector. De workshops zijn voor volwassenen: de begeleidingsteams proberen alles zelf uit voordat ze het met jongeren gebruiken.</li>
+      </ul>
 
-TOON
-Je antwoordt in hoogstens drie zinnen, in eenvoudige taal.
-
-REGELS
-Je zegt "Ik weet het niet" in plaats van een antwoord te verzinnen.
-Je vermeldt je bron wanneer je een cijfer geeft.
-
-GRENZEN
-Je geeft geen medisch of juridisch advies.</pre>
-      <button class="btn small noprint" id="copy">Kopieer de systeemprompt</button>
-
-      <h2 id="fp-composer">Een systeemprompt opstellen</h2>
-      <div class="tabset"><div class="tabs" role="tablist"><button class="tab on" data-tab="b1">Gedragsregel</button><button class="tab" data-tab="b2">Kwaliteitseis</button><button class="tab" data-tab="b3">Doelpubliek</button><button class="tab" data-tab="b4">Grens</button></div>
-      <div class="pane"></div></div>
+      <h2 id="fp-jeunes">Met jongeren</h2>
+      <p>In de activiteit <a class="lk" href="#fiche/13">WikiYouthBot</a> kiest een groep jongeren een lokaal vraagstuk, verzamelt de echte bronnen en maakt van een generatieve AI een eigen expert. De reeks toont wat er achter de twee vakken, Instructies en Kennis, zit van de tools die ze gebruiken.</p>
+      <p><a class="lk" href="https://youth-ai-lab.github.io/wikiyouthbot/">Een echte week in La Rochelle</a>: de chatbots en robotprototypes die jongeren in juli 2026 bouwden, waaronder <a class="lk" href="https://youth-ai-lab.github.io/wikiyouthbot/france/feurisson/">Feurisson</a>, de chatbot voor bosbrandpreventie die het doorlopende voorbeeld van de reeks inspireerde.</p>
 
       <h2 id="fp-vigilance">Aandachtspunten</h2>
       <ul class="check" id="fp-check"></ul>
-
-      <h2 id="fp-exercice">Oefenen</h2>
-      <div class="quiz" id="situation-guide"></div>
-
-      <h2 id="fp-atelier">In een workshop</h2>
-      <p><a href="#fiche/13">WikiYouthBot</a>, <a href="#fiche/9">The Bias Bounty Hunt Challenge</a></p>
+      <p class="muted">Bron: <a class="lk" href="https://youth-ai-lab.github.io/yal-workshop/resources.html">de bronnenpagina van de reeks "Bouw je eigen chatbot"</a>.</p>
     </article>
   </div>
 </section>
@@ -1059,7 +1061,7 @@ Je geeft geen medisch of juridisch advies.</pre>
 
   <span>Inhoud onder de licentie Creative Commons BY-SA 4.0. Gefinancierd door de Europese Unie. De geuite standpunten en meningen zijn echter uitsluitend die van de auteur(s) en weerspiegelen niet noodzakelijk die van de Europese Unie.</span>
 </div></footer>
-<div class="demo"><div class="wrap">Versie V0.231 · mock-up · 19 oktober 2026</div></div>
+<div class="demo"><div class="wrap">Versie V0.232 · mock-up · 19 oktober 2026</div></div>
 <script>
 // Langue de cette version du site (voir outils-i18n/)
 const LANG = 'nl', LOCALE = 'nl-BE', EXPL = 'Verkenningsfase', RES = 'Bron';
@@ -1586,7 +1588,7 @@ const FPS = [
   ['qa', 'Onze woordenlijst over artificiële intelligentie', '#glossaire', '90 woorden in eenvoudige taal'],
   ['choix', 'Een AI-tool kiezen voor een groep jongeren'],
   ['choix', 'Gratis of betalend: wat een account mogelijk maakt'],
-  ['main', 'Systeemprompts begrijpen en gebruiken', '#pratique', 'Claude Projects, Gemini Gems'],
+  ['main', 'Bouw je eigen chatbot: wat hij leest en wie beslist', '#pratique', '6 workshops, 6 gidsen'],
   ['main', 'Afbeeldingen genereren met een groep'],
   ['main', 'Een model trainen met Teachable Machine'],
   ['expl', 'Hoe een machine leert uit voorbeelden'],
@@ -1605,7 +1607,7 @@ const QA = [
     ['Is AI bevooroordeeld?', 'Ja, dat kan. Een model neemt de patronen uit zijn trainingsgegevens over, ook stereotypen en de afwezigheid van bepaalde groepen. De mensen die het ontwerpen, kiezen ook waarvoor het geoptimaliseerd wordt. De tool testen met uiteenlopende voorbeelden helpt om deze biases aan het licht te brengen.']]],
   ['Goede gewoonten', [
     ['Hoe controleer ik een AI-antwoord?', 'Kies één precies punt uit het antwoord en zoek het op in een betrouwbare bron die je kunt identificeren. Open de bronnen die de tool aanhaalt, want ze bestaan misschien niet of zeggen misschien niet wat de tool beweert.'],
-    ['Hoe schrijf ik een goede vraag?', 'Zeg wat je wilt, voor wie en in welke vorm, en voeg een voorbeeld toe als je er een hebt. Lees het antwoord en verbeter dan je vraag. De praktische fiche over systeemprompts gaat verder.', '#pratique', 'Systeemprompts begrijpen en gebruiken'],
+    ['Hoe schrijf ik een goede vraag?', 'Zeg wat je wilt, voor wie en in welke vorm, en voeg daarna een voorbeeld toe als je er een hebt. Lees het antwoord en verbeter dan je vraag. De workshops "Bouw je eigen chatbot" gaan verder.', '#pratique', 'Bouw je eigen chatbot'],
     ['Kan ik AI gebruiken om mijn workshops voor te bereiden?', 'Ja, om ideeën te vinden, een tekst aan te passen of voorbeelden voor te bereiden. Controleer de inhoud voordat je ze gebruikt, en probeer met de tool alles uit wat je met de groep wilt doen.'],
     ['Moet ik zeggen wanneer iets met AI gemaakt is?', 'Ja. Zeggen welke tool gebruikt is en waarvoor, is een goede gewoonte, voor het begeleidingsteam net als voor jongeren. Het opent ook een gesprek over wat de persoon deed en wat de machine deed.']]],
   ['Met jongeren', [
@@ -1869,7 +1871,7 @@ function renderAutopos() {
   const vide = !ids.length; if (vide) ids = [5, 2];
   let pick = ids.map(id => ACTS.find(a => a.id === id));
   if (ans.ia === 0) pick = pick.slice().sort((a, b) => NIV[a.n] - NIV[b.n]);
-  const fiche = ans.ia === 0 ? 'Een AI-tool kiezen' : 'Systeemprompts gebruiken';
+  const fiche = ans.ia === 0 ? 'Een AI-tool kiezen' : 'Bouw je eigen chatbot';
   const rep = ans.exp === 0 ? [4, 'Een workshop begeleiden'] : [7, 'Aanpassen aan je context'];
   el.innerHTML = `<h3 class="qh">${vide ? 'Nog geen activiteit van minder dan 2 uur voor deze groep. In 2 tot 3 uur:' : 'Om met je groep te starten'}</h3>
     <div class="qres">${pick.map(a => `<a class="p${a.ph}" href="#fiche/${a.id}"><b>${esc(a.t)}</b><span>${esc(a.dc === 'court' ? 'Minder dan 2 uur' : a.dc === 'moyen' ? '2 tot 3 uur' : 'Meerdere sessies')} · ${a.n}</span></a>`).join('')}</div>
@@ -2002,7 +2004,7 @@ function prettyHash(h) {
     case 'fiche': return ASLUG[a] ? 'activity/' + ASLUG[a] : 'activities';
     case 'demarche': return has && GSLUG[a] ? 'facilitation/' + GSLUG[a] : 'facilitation';
     case 'ia': return 'practical-sheets';
-    case 'pratique': return 'practical-sheets/system-prompts';
+    case 'pratique': return 'practical-sheets/build-your-own-chatbot';
     case 'qa': return 'practical-sheets/ai-questions' + (has ? '/question-' + (+a + 1) : '');
     case 'glossaire': return 'practical-sheets/glossary' + (!has ? '' : a.startsWith('l-') ? '/letter-' + a.slice(2).toLowerCase() : '/' + a.slice(2));
     case 'retours': return 'field-reports';
@@ -2019,7 +2021,7 @@ function internalHash(h) {
     case 'activity': return keyOf(ASLUG, p[1]) ? 'fiche/' + keyOf(ASLUG, p[1]) : 'activites';
     case 'facilitation': return 'demarche' + (GSLUG.includes(p[1]) ? '/' + GSLUG.indexOf(p[1]) : '');
     case 'practical-sheets':
-      if (p[1] === 'system-prompts') return 'pratique';
+      if (p[1] === 'build-your-own-chatbot' || p[1] === 'system-prompts') return 'pratique';
       if (p[1] === 'ai-questions') return 'qa' + (/^question-\d+$/.test(p[2] || '') ? '/' + (+p[2].slice(9) - 1) : '');
       if (p[1] === 'glossary') return 'glossaire' + (!p[2] ? '' : p[2].startsWith('letter-') ? '/l-' + p[2].slice(7).toUpperCase() : '/g-' + p[2]);
       return 'ia';
@@ -2211,8 +2213,8 @@ document.querySelectorAll('.lang [data-l]').forEach(x => { x.classList.toggle('o
 document.querySelector('.lang summary').textContent = LANG.toUpperCase();
 $('varform').onsubmit = e => { e.preventDefault(); const c = S.copies[varId]; c.prop = { at: new Date().toLocaleDateString(LOCALE, { day: 'numeric', month: 'long', year: 'numeric' }), note: $('var-note').value }; store.set(S); $('vardlg').close(); route0(); };
 $('fp-check').innerHTML = ['Het account staat op naam van het begeleidingsteam.', 'De minimumleeftijd die de tool vereist, is nagekeken.', 'Er worden geen persoonsgegevens ingevoerd.', 'Een testvraag bevestigt dat de systeemprompt in aanmerking wordt genomen.'].map((it, i) => `<li><input type="checkbox" id="fp${i}"><label for="fp${i}"><span>${esc(it)}</span></label></li>`).join('');
-$('copy').onclick = () => { try { navigator.clipboard.writeText($('prompt').textContent); } catch (e) {} $('copy').textContent = 'Systeemprompt gekopieerd'; };
-renderSituation($('situation-guide'));
+if ($('copy')) $('copy').onclick = () => { try { navigator.clipboard.writeText($('prompt').textContent); } catch (e) {} $('copy').textContent = 'Systeemprompt gekopieerd'; };
+if ($('situation-guide')) renderSituation($('situation-guide'));
 renderAutopos();
 renderDemo(0);
 const PARCOURS = [
